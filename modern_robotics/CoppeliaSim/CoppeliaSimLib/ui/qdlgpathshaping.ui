@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CQDlgPathShaping</class>
+ <widget class="QDialog" name="CQDlgPathShaping">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>430</width>
+    <height>279</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Path Shaping Parameters</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>30</y>
+     <width>411</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Main parameters</string>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+   <widget class="QCheckBox" name="qqFollowOrientation">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>25</y>
+      <width>221</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="text">
+     <string>Follow full path orientation</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>45</y>
+      <width>191</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Element maximum length [m]</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="qqMaxLength">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>45</y>
+      <width>66</width>
+      <height>18</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="qqAdjustColor">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>25</y>
+      <width>131</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="text">
+     <string>Adjust color</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="qqGenerateShape">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>45</y>
+      <width>131</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="text">
+     <string>Generate shape</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>110</y>
+     <width>411</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Section characteristics</string>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>25</y>
+      <width>81</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Type</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="qqTypeCombo">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>25</y>
+      <width>121</width>
+      <height>18</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>20</y>
+      <width>171</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Coordinates (x/y pairs) [m]</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+    <widget class="QTextEdit" name="qqCoordinates">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>151</width>
+       <height>101</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QCheckBox" name="qqCyclic">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>45</y>
+      <width>211</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="text">
+     <string>Last coordinate links to first</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="qqScalingFactor">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>65</y>
+      <width>66</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>65</y>
+      <width>131</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Scaling factor</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCheckBox" name="qqEnabled">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>241</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
+   <property name="text">
+    <string>Path shaping enabled</string>
+   </property>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>qqEnabled</tabstop>
+  <tabstop>qqFollowOrientation</tabstop>
+  <tabstop>qqAdjustColor</tabstop>
+  <tabstop>qqGenerateShape</tabstop>
+  <tabstop>qqMaxLength</tabstop>
+  <tabstop>qqTypeCombo</tabstop>
+  <tabstop>qqCyclic</tabstop>
+  <tabstop>qqScalingFactor</tabstop>
+  <tabstop>qqCoordinates</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
