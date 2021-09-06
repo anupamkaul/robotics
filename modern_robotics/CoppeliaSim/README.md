@@ -1,4 +1,13 @@
+Links:
+-----
+
+https://www.coppeliarobotics.com/
+(--> download and install the .tar.gz for ubuntu 20) - I chose pro (didn't work)
+(--> I chose version for 16.04 and that works)
+
 https://github.com/CoppeliaRobotics
+https://www.coppeliarobotics.com/helpFiles/index.html
+
 
 http://hades.mech.northwestern.edu/index.php/Getting_Started_with_the_CoppeliaSim_Simulator
 

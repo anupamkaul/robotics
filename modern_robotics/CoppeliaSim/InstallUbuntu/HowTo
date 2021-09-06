@@ -1,0 +1,5 @@
+run coppeliaSim.sh
+
+(tested that it runs with the Ubuntu16.04 version)
+
+
