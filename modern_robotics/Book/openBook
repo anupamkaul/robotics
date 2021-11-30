@@ -1,1 +1,3 @@
-evince --page-label=31 RoboticsBook.pdf
+# look up page numbers from Index.txt and invoke like 'openBook 31' etc..
+
+evince --page-label=$1 RoboticsBook.pdf
