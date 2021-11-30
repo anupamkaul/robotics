@@ -1,4 +1,19 @@
 Chap 2 ..... Page 31
 Chap 3 ..... Page 77
+Chap 4 ..... Page 155
+Chap 5 ..... Page 189
+Chap 6 ..... Page 237
+Chap 7 ..... Page 263
+Chap 8 ..... Page 289
+Chap 9 ..... Page 347  (Trajectory Generation)
+Chap 10 .... Page 375  (Motion Planning)
+Chap 11 .... Page 425  (Robot Control)
+Chap 12 .... Page 483  (Grasping and Manipulation)
+Chap 13 .... Page 535  (Wheeled Mobile Robots)
+
+Appdx A .... Page 587  (Summary of useful formulas)
+Appdx B .... Page 587  (Other representations of rotations)
+
+
 
 
