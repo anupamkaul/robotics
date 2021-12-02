@@ -1,10 +1,10 @@
-Chap 2 ..... Page 31
-Chap 3 ..... Page 77
-Chap 4 ..... Page 155
-Chap 5 ..... Page 189
-Chap 6 ..... Page 237
-Chap 7 ..... Page 263
-Chap 8 ..... Page 289
+Chap 2 ..... Page 31   (Configuration Space)
+Chap 3 ..... Page 77   (Rigid-Body motions)
+Chap 4 ..... Page 155  (Forward Kinematics)
+Chap 5 ..... Page 189  (Velocity Kinematics and Statics)
+Chap 6 ..... Page 237  (Inverse Kinematics)
+Chap 7 ..... Page 263  (Kinematics of Closed Chains)
+Chap 8 ..... Page 289  (Dynamics of Open Chains)
 Chap 9 ..... Page 347  (Trajectory Generation)
 Chap 10 .... Page 375  (Motion Planning)
 Chap 11 .... Page 425  (Robot Control)
@@ -12,7 +12,11 @@ Chap 12 .... Page 483  (Grasping and Manipulation)
 Chap 13 .... Page 535  (Wheeled Mobile Robots)
 
 Appdx A .... Page 587  (Summary of useful formulas)
-Appdx B .... Page 587  (Other representations of rotations)
+Appdx B .... Page 597  (Other representations of rotations)
+Appdx C .... Page 607  (Denavit-Hartenberg Parameters)
+Appdx D .... Page 619  (Optimizers and Lagrange Multipliers)
+
+
 
 
 
