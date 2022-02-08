@@ -14,6 +14,8 @@ To open some pre-installed scenes:
 
 -----
 
+Scene examples:
 
+1. Pick and place : load scene: ../Scenes/V-REP_scenes/Scene6_youBot_cube.ttt and play simulation with file ../Scenes/V-REP_scenes/Scene6_example.csv 
 
 
