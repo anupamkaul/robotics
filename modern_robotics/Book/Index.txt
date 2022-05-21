@@ -16,6 +16,8 @@ Appdx B .... Page 597  (Other representations of rotations)
 Appdx C .... Page 607  (Denavit-Hartenberg Parameters)
 Appdx D .... Page 619  (Optimizers and Lagrange Multipliers)
 
+Summaries and Exercises List
+Chap2  ..... Page 56   
 
 
 
