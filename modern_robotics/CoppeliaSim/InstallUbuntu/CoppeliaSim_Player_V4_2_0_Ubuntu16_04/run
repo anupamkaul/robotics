@@ -1,1 +1,11 @@
 ./coppeliaSim.sh ../../Scenes/V-REP_scenes/Scene6_youBot_cube.ttt
+
+# others:
+# ./coppeliaSim.sh ../../Scenes/V-REP_scenes/Scene1_UR5.ttt
+# ./coppeliaSim.sh ../../Scenes/V-REP_scenes/Scene2_UR5_csv.ttt
+# ./coppeliaSim.sh ../../Scenes/V-REP_scenes/Scene3_youBot.ttt
+# ./coppeliaSim.sh ../../Scenes/V-REP_scenes/Scene4_youBot_csv.ttt
+# ./coppeliaSim.sh ../../Scenes/V-REP_scenes/Scene5_motion_planning.ttt
+# ./coppeliaSim.sh ../../Scenes/V-REP_scenes/Scene6_youBot_cube.ttt
+# ./coppeliaSim.sh ../../Scenes/V-REP_scenes/Scene7_MTB_csv.ttt
+# ./coppeliaSim.sh ../../Scenes/V-REP_scenes/Scene8_gripper_csv.ttt
