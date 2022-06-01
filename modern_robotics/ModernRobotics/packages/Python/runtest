@@ -1,0 +1,8 @@
+# capturing here how I run test.py
+
+# in this current folder I did: 
+
+# python setup.py build
+# python setup.py install
+# python tests/test1.py 
+
