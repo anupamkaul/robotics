@@ -7,7 +7,8 @@
 
 if [ $# -eq 0 ]
     then
-        echo "No arguement supplied, give me a chapter page number like this:";
+        clear;
+        echo "Openbook: No arguement supplied, give me a chapter page number like this:";
         cat Index.txt;	
         exit
 fi

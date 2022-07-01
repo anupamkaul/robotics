@@ -1,3 +1,5 @@
+
+Start of
 Chap 2 ..... Page 31   (Configuration Space)
 Chap 3 ..... Page 77   (Rigid-Body motions)
 Chap 4 ..... Page 155  (Forward Kinematics)
@@ -16,8 +18,20 @@ Appdx B .... Page 597  (Other representations of rotations)
 Appdx C .... Page 607  (Denavit-Hartenberg Parameters)
 Appdx D .... Page 619  (Optimizers and Lagrange Multipliers)
 
-Summaries and Exercises List
+Summaries and Exercises Lists of
 Chap2  ..... Page 56   
+Chap3  ..... Page 129   
+Chap4  ..... Page 176   
+Chap5  ..... Page 218   
+Chap6  ..... Page 253
+Chap7  ..... Page 279
+Chap8  ..... Page 336
+Chap9  ..... Page 367
+Chap10  .... Page 416
+Chap11  .... Page 471
+Chap12  .... Page 523
+Chap13  .... Page 574
+
 
 
 
