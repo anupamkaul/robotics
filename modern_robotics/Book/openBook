@@ -1,3 +1,15 @@
 # look up page numbers from Index.txt and invoke like 'openBook 31' etc..
 
+# todo: make this an interactive script
+# 1. Print TOC
+# 2. Ask where to go
+# 3. Invoke it back on demand and browse
+
+if [ $# -eq 0 ]
+    then
+        echo "No arguement supplied, give me a chapter page number like this:";
+        cat Index.txt;	
+        exit
+fi
+
 evince --page-label=$1 RoboticsBook.pdf&
