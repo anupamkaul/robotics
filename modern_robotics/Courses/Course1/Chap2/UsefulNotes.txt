@@ -1,5 +1,37 @@
 My shorthand notes to remember content of this chapter:
 -------------------------------------------------------
 
+A solid robot has basic shapes (like rigid non-deformed brick like shapes, which is a big assumption). So avoiding any flexible
+shapes. Like rectangular bricks. These are called Links. Obviously links don't deform, and they don't move by themselves.
+
+Links join with each other using Joints. Because of the existence of Joints, we can have motion between links, leading to overall
+motion for the Robot. There are 6 basic joints : Revolute R (rotation), Prismatic P (linear), Helical (H), Cylindrical (C), Universal (U)
+and Spherical (S). A good diagram is on page 16.
+
+Now its all math, so first, we want to understand "what" a Robot is, in terms of Links and Joints. So a Configuration of a Robot, is a spec
+(specification, like a mathematical specification) of all points of a robot.  Since we will have to account for motion, and motion planning etc, 
+the idea of a configuration of a robot will help answer : where is the robot (with a bag of "what"). Btw configuration is just "a" configuration, i.e.
+the set of values representing the body of a robot at a given point of time. As time changes, configurations can/will change.
+
+Thus configuration is extendible to any actual Robot, including flexible shapes. The concept of Rigid Bodies, and of first starting with 
+simpler physical dimensions (like 2D, 3D etc) really simplifies the calculation/set or representation of the configuration (set of all points) of a robot. 
+So now since the body is Rigid, it means points/distances are invariant with respect to each other. So there is obviously an optimized way of representing
+the configuration of a robot. For example, to specify a Link in a 2D space, I may need (x, y) for position and then a theta (angle) to specify its orientation w.r.t axis X (of course assuming that my reference frame is relative to an origin reference frame etc). So DOF (degrees of freedom) is that minimum Number of parameters
+to represent a configuration of a robot (for a given dimension). DOF are real number values.
+
+Obviously also want to know the set of all configurations possible for a robot. This is called the configuration space or C-space of a robot. Mathematically 
+C-space is represented as an n-dimensional space, like actually a physical object, like a torus or cylinder (the C-space) and a configuration is then a "point"
+of this space. (This point of course expands into the actual value set, or the DOF values representing that particular configuration). Its like if you had to accumulate/add up all of the configuration "values", and if you had to see a "physical object" within the notion of a "space", then that is how you would "visualize" C-space (like an object), but then then that would include/increase the notion of a space, and thereby extend it from 2, 3 to n-dimensions. 
+
+Thus C-Spaces of robots contain info about its configurations.
+
+---------------
+Definition 2.1. The configuration of a robot is a complete specification of the position of every point of the robot. The minimum number n of real-valued
+coordinates needed to represent the configuration is the number of degrees of freedom (dof) of the robot. The n-dimensional space containing all possible
+configurations of the robot is called the configuration space (C-space). The configuration of a robot is represented by a point in its C-space.
+---------------
+
+
+
 
 
