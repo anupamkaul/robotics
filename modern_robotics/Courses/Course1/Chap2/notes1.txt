@@ -1,9 +1,39 @@
-This first course in the Modern Robotics specialization focuses on Chapters 2 and 3, foundational material on the configurations and velocities of robots and the representation of spatial motions and forces.  The course is broken into four weeks:  two on Chapter 2, Configuration Spaces, and two on Chapter 3, Rigid-Body Motions.  
+Video Notes:
+------------
 
-Chapter 2 introduces the notion of the configuration space (or C-space for short), the space representing all possible configurations of a robot.  The number of degrees of freedom is the dimension of the C-space, and Chapter 2 derives the number of degrees of freedom of rigid bodies (six for a spatial rigid body) and mechanisms consisting of rigid bodies (links) and joints.  Chapter 2 also introduces minimum-parameter explicit parametrizations of C-spaces, as well as implicit representations which use more numbers, subject to constraints.  The chapter concludes by introducing constraints on robot motion (holonomic configuration constraints and nonholonomic velocity constraints) and the notions of the task space for a task and the workspace of a robot.
+This first course in the Modern Robotics specialization focuses on Chapters 2 and 3.
 
-Chapter 3 focuses on representing configurations and velocities of rigid bodies.  The primary representation of a configuration is a homogeneous transformation matrix, an implicit representation of the position and orientation of one frame relative to another.  The primary representation of a rigid-body velocity is a six-dimensional twist.  A twist followed for unit time is another representation of the configuration of one frame relative to another (called the "exponential coordinate" representation of a configuration), and the matrix exponential solves a linear ordinary differential equation that integrates the twist to get a new configuration.  Chapter 3 ends by introducing the wrench, a 6-vector representation of torques (moments) and forces.  
+This is the foundational material on the Configurations and Velocities of robots and the representation of spatial motions and forces.  
 
+The course is broken into four weeks:  two on Chapter 2, Configuration Spaces, and two on Chapter 3, Rigid-Body Motions.  
+
+Chapter 2 introduces the notion of the configuration space (or C-space for short) :
+the space representing all possible configurations of a robot. 
+
+The number of degrees of freedom is the dimension of the C-space.
+Chapter 2 derives the number of degrees of freedom of rigid bodies (6 for a spatial rigid body) 
+and mechanisms consisting of rigid bodies (links) and joints.  
+
+Chapter 2 also introduces minimum-parameter explicit parametrizations of C-spaces
+as well as implicit representations which use more numbers
+subject to constraints
+
+The chapter concludes by introducing constraints on robot motion
+(holonomic configuration constraints and nonholonomic velocity constraints) 
+and the notions of the task space for a task and the workspace of a robot.
+
+Chapter 3 focuses on representing configurations and velocities of rigid bodies.  
+
+The primary representation of a configuration is a homogeneous transformation matrix 
+wich is an implicit representation of the position and orientation of one frame relative to another.  
+
+The primary representation of a rigid-body velocity is a six-dimensional twist.  
+A twist followed for unit time is another representation of the configuration of one frame relative to another 
+(called the "exponential coordinate" representation of a configuration), 
+and the matrix exponential solves a linear ordinary differential equation that integrates the twist to get a new configuration.  
+
+Chapter 3 ends by introducing the wrench, a 6-vector representation of torques (moments) and forces.  
 The mathematical foundations developed in these two chapters are used throughout the rest of the specialization.
 
+Further reads:
 http://hades.mech.northwestern.edu/index.php/Coursera_Resources

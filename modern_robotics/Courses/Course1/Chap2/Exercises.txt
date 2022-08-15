@@ -1,0 +1,68 @@
+Exercises
+---------
+
+Note: I cannot copy the diagrams from the book, so refer to script openBook
+and open up the appropriate exercise section.
+
+In the exercises below, if you are asked to “describe” a C-space, you should
+indicate its dimension and whatever you know about its topology (e.g., using
+R, S, and T , as with the examples in Sections 2.3.1 and 2.3.2).
+
+
+Exercise 2.1 
+
+Using the methods of Section 2.1 derive a formula, in terms of
+n, for the number of degrees of freedom of a rigid body in n-dimensional space.
+Indicate how many of these dof are translational and how many are rotational.
+Describe the topology of the C-space (e.g., for n = 2, the topology is R 2 ⇥ S 1 ).
+
+
+
+
+
+Exercise 2.2 
+
+Find the number of degrees of freedom of your arm, from your
+torso to your palm (just past the wrist, not including finger degrees of freedom).
+Keep the center of the ball-and-socket joint of your shoulder stationary (do not
+“hunch” your shoulders). Find the number of degrees of freedom in two ways:
+    (a) add up the degrees of freedom at the shoulder, elbow, and wrist joints;
+    (b) fix your palm flat on a table with your elbow bent and, without moving
+        the center of your shoulder joint, investigate with how many degrees of
+        freedom you can still move your arm.
+
+Do your answers agree? How many constraints were placed on your arm when
+you placed your palm at a fixed configuration on the table?
+
+
+
+
+
+Exercise 2.3 
+
+In the previous exercise, we assumed that your arm is a serial
+chain. In fact, between your upper arm bone (the humerus) and the bone
+complex just past your wrist (the carpal bones), your forearm has two bones,
+the radius and the ulna, which are part of a closed chain. Model your arm,
+from your shoulder to your palm, as a mechanism with joints and calculate the
+number of degrees of freedom using Grübler’s formula. Be clear on the number
+of freedoms of each joint you use in your model. Your joints may or may not be
+of the standard types studied in this chapter (R, P, H, C, U, and S).
+
+
+
+
+
+
+Exercise 2.4 
+
+Assume each of your arms has n degrees of freedom. You are
+driving a car, your torso is stationary relative to the car (owing to a tight
+seatbelt!), and both hands are firmly grasping the wheel, so that your hands
+do not move relative to the wheel. How many degrees of freedom does your
+arms-plus-steering wheel system have? Explain your answer.
+
+
+
+
+
