@@ -16,12 +16,16 @@ the set of values representing the body of a robot at a given point of time. As 
 Thus configuration is extendible to any actual Robot, including flexible shapes. The concept of Rigid Bodies, and of first starting with 
 simpler physical dimensions (like 2D, 3D etc) really simplifies the calculation/set or representation of the configuration (set of all points) of a robot. 
 So now since the body is Rigid, it means points/distances are invariant with respect to each other. So there is obviously an optimized way of representing
-the configuration of a robot. For example, to specify a Link in a 2D space, I may need (x, y) for position and then a theta (angle) to specify its orientation w.r.t axis X (of course assuming that my reference frame is relative to an origin reference frame etc). So DOF (degrees of freedom) is that minimum Number of parameters
-to represent a configuration of a robot (for a given dimension). DOF are real number values.
+the configuration of a robot. For example, to specify a Link in a 2D space, I may need (x, y) for position and then a theta (angle) to specify its orientation 
+w.r.t axis X (of course assuming that my reference frame is relative to an origin reference frame etc).
+So DOF (degrees of freedom) is that minimum Number of parameters to represent a configuration of a robot (for a given dimension). 
+DOF are real number values.
 
 Obviously also want to know the set of all configurations possible for a robot. This is called the configuration space or C-space of a robot. Mathematically 
 C-space is represented as an n-dimensional space, like actually a physical object, like a torus or cylinder (the C-space) and a configuration is then a "point"
-of this space. (This point of course expands into the actual value set, or the DOF values representing that particular configuration). Its like if you had to accumulate/add up all of the configuration "values", and if you had to see a "physical object" within the notion of a "space", then that is how you would "visualize" C-space (like an object), but then then that would include/increase the notion of a space, and thereby extend it from 2, 3 to n-dimensions. 
+of this space. (This point of course expands into the actual value set, or the DOF values representing that particular configuration). Its like if you had to 
+accumulate/add up all of the configuration "values", and if you had to see a "physical object" within the notion of a "space", then that is how you would 
+"visualize" C-space (like an object), but then then that would include/increase the notion of a space, and thereby extend it from 2, 3 to n-dimensions. 
 
 Thus C-Spaces of robots contain info about its configurations.
 
@@ -31,7 +35,21 @@ coordinates needed to represent the configuration is the number of degrees of fr
 configurations of the robot is called the configuration space (C-space). The configuration of a robot is represented by a point in its C-space.
 ---------------
 
+Note that dof should all be real values (R range) A binary value for a variable does not classify it as a dof. 
 
+A planar rigid body's DOF in 2D space is 3 and 3D space (spacial rigid body) is 6 (x, y, z, roll, pitch, yaw)
 
+Joints introduce DOF between 2 links (2 rigid bodies) by introducing constraints in motion.a
+
+Page 17:
+
+Revolute R    : dof (f) =1, constraints (c) between 2 planar links = 2,   constraints (c) between 2 spacial links = 5  
+Prismatic P   : dof (f) =1, constraints (c) between 2 planar links = 2,   constraints (c) between 2 spacial links = 5  
+Helical H     : dof (f) =1, constraints (c) between 2 planar links = n/a, constraints (c) between 2 spacial links = 5  
+Cylindrical R : dof (f) =2, constraints (c) between 2 planar links = n/a, constraints (c) between 2 spacial links = 4  
+Universal U   : dof (f) =2, constraints (c) between 2 planar links = n/a, constraints (c) between 2 spacial links = 4  
+Spherical S   : dof (f) =2, constraints (c) between 2 planar links = n/a, constraints (c) between 2 spacial links = 3 
+
+ 
 
 

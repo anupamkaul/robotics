@@ -1,5 +1,70 @@
 Useful examples from Chapter 2:
 -------------------------------
 
+DOF of a rigid body (2D):
+
+Assume there's a coin. (page 13). 
+To represent configuration choose 3 points on it. 
+With a reference frame we will need 2 params for a point then : x,y
+Take random points A, B, C
+A = (xa, ya), B = (xb, yb), C = (xc, yc)
+
+Now by the definition of a rigid body, the distances DA, DB, DC between these 2 points have to be constant.
+DA, DB, DC are constraints.
+
+D(A, B) = sqrt( sq(xa - xb) + sq(ya - yb) )
+D(B, C) = sqrt( sq(xb - xc) + sq(yb - yc) )
+D(A, C) = sqrt( sq(xc - xa) + sq(yc - ya) )
+
+Constant-ness implies non-real values (DOF are real values) but its true that end points could vary (every B with an A for example)
+Note that these fixed distances are constraints (constants are constraints). (Thus degrees of 'freedom' are params that attack constraints). 
+
+Now if you fix A (xa, ya), then because D(A,B) is constant all possible values of B are on a circle with A as origin and DA as radius.
+The best way then to refer to all (A, B) is (XA, YA, Theta) where Theta is the angle Vector (AB) makes with the X axis of the frame of reference. 
+Thus 3 DOF to locate all A, B in a coin.
+
+Now with A, B fixed, all C possible are really 2 values, i.e. C has to be on a point of intersection of the 2 circles AB and BC. 
+Since DOF are real values (a 2 value is like a constant), therefore as I increase 1 point, DOF still remains 3 (X, Y, Theta).
+
+If you add a D, it adds D(A, D), D(B, D) and D(C, D) as 3 additional constraints. Since C was fixed (2 values only) so D(C, D) is a redundant constraint.
+(provides no new info). The 2 dof xd, yd introduced by the new point D are eliminated by the 2 constraints. Thus adding D (and additional points) does not increase DOF.
+
+Therefore a rigid body (like a coin) in 2D space has 3 DOF (x, y, theta) to represent the configuration (complete specification of the position of every point of the body). If this coin was a single body link of a robit, its 2D DOF would be 3.
+
+----
+
+Something interesting came out of our observation from Point D's inclusion:
+
+DOF = (sum of freedom of points) - (number of independent constraints)     [where independent = not-redundant, i.e. an actual/real constraint]
+
+since constraints are expressed as equations (see above, because an equation is really a constraint of values. The rhs for example is a constraint in an equation that the lhs terms have to meet), and points are the number of variales (in a rigid body link for example), therefore:
+
+DOF = (sum of freedoms of the bodies) - (number of independent equations)
+For robots (physical), sum of freedom are actually given by Joints.
+
+----
+
+
+DOF of a rigid body (3D): 
+
+Now the coin is not on a table, its in space.
+
+So the reference frame has 3 axis.
+Thus A = (xa, ya, za) etc.
+
+Point B is on a the surface of a sphere with A as center and radius D(A, B) = sqrt( sq(xa-xb) + sq(xb-xc) + sq(xc-xa)) etc.
+DOFs here are x, y, z,  Theta1 and Theta2 (2 angles needed to specify point B on a sphere) (coming to roll, yaw etc)  (in a 2D concept).
+(In a 3D concept you can call it lat and long, hence 2)
+
+Point C is at the intersection of the 2 spheres which can be described by a circle, hence parameterized by a Theta.
+Hence DOF = 6 (x, y, z, Theta1, Theta2, Theta3). Additional points get eliminated.
+
+
+
+
+
+
+
+
 
 
