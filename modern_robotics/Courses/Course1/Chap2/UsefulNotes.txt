@@ -51,5 +51,37 @@ Universal U   : dof (f) =2, constraints (c) between 2 planar links = n/a, constr
 Spherical S   : dof (f) =2, constraints (c) between 2 planar links = n/a, constraints (c) between 2 spacial links = 3 
 
  
+Derivation of Grubler's Formula (DOF of a Robot - rigid body links, closed and open chains)
+-------------------------------------------------------------------------------------------
 
+My derivation is really simple:
+
+Basically, DOF = Sum of degrees of freedom of bodies (links) - sum of constraints (joints)  -- (1)
+(because bodies are links, and constraints are only provided by joints).
+
+Lets consider a robot that has N links and J joints. Assume earth is 1 link, so its really (N-1) links.
+Let m stand for planar DOF of a link or spacial DOF of a link (rigid body link only). Hence m = 3 or m = 6.
+Let a Joint i have Freedoms as Fi and Constraints as Ci. Note that Fi + Ci = m for all i (joints).
+
+Thus from (1):
+
+DOF (robot of rigid links) = m(N - 1) - (Sigma (Ci )[ where i from 1 to J]) 
+DOF (robot of rigid links) = m(N - 1) - (Sigma (m - Fi)[ where i from 1 to J])
+ 
+DOF (robot of rigid links) = m(N - 1 -J) + (Sigma (Fi)[ where i from 1 to J])     
+(note: here we took Sigma(m(i is 1 to J) which is mJ basically, and Sigma (Fi) becomes a + with the double -
+
+
+.. and that is Grubler's formula ... (while representing math equations in Vi sucks):
+
+DOF (robot of rigid links) = m(N - 1 -J) + (Sigma (Fi)[ where i from 1 to J])     
+
+where:
+m = 3 0r 6 (planar or spacial)
+N - 1 = actual links number (all rigid)
+J = number of joints
+
+Fi = Freedom of a joint (see table above for actual typical freedom of 6 joint types)
+
+-------------------------------------------------------------------------------------------
 
