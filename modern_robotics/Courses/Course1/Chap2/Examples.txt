@@ -153,7 +153,34 @@ DOF = 3(8 - 1 - 9) + 9
     = -6 + 9
     = 3
 
+----
 
+Example 2.7 - Delta Robot - Figure 2.8
+
+The delta robot is basically 2 structures connected with 3 legs.
+The top structure is stationary and the lower is mobile.
+The legs contain 3 revolute, 4 spherical joints, and 5 links each (clearly shown in Fig 28)
+The 2 platforms can be considered 2 links each. (Not accounting for end effector fingers etc, only this part)
+
+So:  J = (3 + 4) * 3 = 21
+and: N = 5 * 3 + 2   = 17
+
+Recall that Fi(revolute)=1 and Fi(Spherical)=3 (for m=6 or 3D/spacial)
+
+Thus DOF = 6(17 - 1 - 21) + (3*3)*1 + (4*3)*3
+         = 6(-5) + 9 + 36
+         = -30 + 45
+         = 15
+
+So a delta Robot actually has 15 DOF. 
+
+But the actual end effector only shows 3 DOF in practice. This is because the parallelogram legs (each leg
+having 4 links) ensures that the moving lower half is always parallel to the top fixed structure. This "tortion"
+of the 4 links in every parallelogram ( and 3 of these legs ) introduces hidden constraints of 12, and 15-12 = 3.
+
+Finally the delta robot through its end effector acts as an x-y-z cartesian positioning device.
+
+----
 
 
 
