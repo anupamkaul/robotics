@@ -86,7 +86,9 @@ Let's calculate DOFs for:
 
 ----
 
-Example 2.4 (Figure 2.5a) 
+Example 2.4 (Figure 2.5a to d)
+
+These are some classic planar mechanisms for robots
 
 Let's calculate DOFs for:
 1. K-link planar serial chain robot
@@ -135,6 +137,21 @@ DOF = m(N-1-J) + Sigma(Fi)
 
 ----
 
+Example 2.5 (Figure 2.6)
+
+This is an example of a planar mechanism with 2 overlapping joints now
+Note that in Figure 2.6, the right side bottom diagonal open-on-top rectangle
+is to be interpretted as 3 links touching that part. Since 1 joint only connects
+2 links, that open diagonal rect could therefore be 2 joints.
+
+DOF = m(N-1-J) + Sigma(Fi)
+N = 5 + 3(the open rect) + 1(ground)
+J = 6(regular) + 2 (revolute - the overlap) + 1 prismatic = 9
+
+DOF = 3(8 - 1 - 9) + 9
+    = 3(-2) + 9
+    = -6 + 9
+    = 3
 
 
 
