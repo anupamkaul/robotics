@@ -74,6 +74,68 @@ DOF = m(N-1-J) + sigma(Fi) = 3(4 - 1 - 4) + 4 = -3 + 4 = 1
 (b) Slider-crank: N=3 (incl earth), J=3 (2 revolute, but 1 is RP (revolute & prismatic), F1 = 1, F2 = 1, F3 = 1+1(2)), m=3 (planar):
 DOF = 3(3 - 1 - 3) + 4 = 1 (planar)
 
+----
+
+Example 2.4 (Figure 2.5a) 
+
+Let's calculate DOFs for:
+1. K-link planar serial chain robot
+2. 5-Bar planara linkage (closed loop)
+3. Stephenson 6-bar linkage
+4. Watt 6-bar linkage
+
+----
+
+Example 2.4 (Figure 2.5a) 
+
+Let's calculate DOFs for:
+1. K-link planar serial chain robot
+2. 5-Bar planara linkage (closed loop)
+3. Stephenson 6-bar linkage
+4. Watt 6-bar linkage
+
+1. For K-link (all revolute joints):
+DOF =  m(N-1-J) + Sigma(Fi)
+    =  3(K+1 - 1 - K) + K
+    =  3.0 + K 
+    = K
+So every K-link planar serial chain (open at one end) will have DOF = K
+(this is also called a kR robot)
+
+2. For 5-bar linkage (Figure 2.5b):
+
+DOF =  m(N-1-J) + Sigma(Fi)
+       (N = 5 i.e. 4 links + ground, J = revolute joints = 5)
+    =  3(5-1-5) + 5
+    =  -3 + 5
+    =  2
+
+(note that between kR-Robot (kLinks - open) and (b) 5-bar linkage, the difference is the open arm)
+
+3. Stephenson 6-bar linkage
+
+N = 5 + 1
+J = 7 (note that the main body's "single circle" markings are also revolute joints)
+
+DOF = m(N-1-J) + sigma(Fi)
+    = 3(6 - 1 -7) + 7
+    = 3(-2) + 7
+    = -6 + 7
+    = 1
+
+4. Watt 6-bar linkage
+
+N = 5 + 1
+J = 7
+
+DOF = m(N-1-J) + Sigma(Fi)
+    = 3(6-1-7) + 7
+    = -6 + 7
+    = 1
+
+----
+
+
 
 
 
