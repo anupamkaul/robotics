@@ -182,6 +182,13 @@ Finally the delta robot through its end effector acts as an x-y-z cartesian posi
 
 ----
 
+Example: Calculate DOF of the human arm, assuming the palm/fingers are a blackbox. Thus consider joints with shoulder, elbow and wrist and assume shoulder is earthed.
+
+Ans: So 3 links (+ 1 earth) implies N = 4. J = 3. The joints (I assume) are shoulder = Spherical, elbow = Spherical and Wrist = revolute
+DOF = 6 * (4 - 1 - 3) + 3 + 3 + 1
+    = 0 + 7
+    = 7
+
 
 
 
