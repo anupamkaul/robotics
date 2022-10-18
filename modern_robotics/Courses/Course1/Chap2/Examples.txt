@@ -189,6 +189,36 @@ DOF = 6 * (4 - 1 - 3) + 3 + 3 + 1
     = 0 + 7
     = 7
 
+----
+
+Example 2.8 - Stewart-Gough platform 
+
+This is in figure 1.1b. (page 42 to 22).
+
+2 platforms (from the pg 22 diagram). Lower looks fixed and upper is movable(mobile).
+6 legs between the 2 platforms but each has 2 transitional inner legs, so 12 links + the 2 top and bottom.
+So N = 12 + 2 = 14
+
+legs = looks like 2 revolute joints each, so 12, and 1 prismatic each, so 6, hence 18
+the top platform places constraints on the motion, but intuitively its not clear.
+
+actually joints in each leg: the 2 revolutes are actually 1 universal and 1 spherical.
+So J : 3 joints for each leg and 6 legs so, J = 18 (6 universal, 6 spherical, 6 prismatic)
+
+DOF = m(N - 1 - J) + Sigma(Fi)
+    = 6(14 - 1 - 18) + 6(1) + 6(2) + 6(3)
+    = -30 + 36
+    = 6
+
+(note that some versions of Steward Gough have the 6 universal joints replaced with 6 spherical)
+that would make it : -30 + 6(1) + 6(2) + 6(2) = -30 + 30 = 0, but the spherical joint allows torsional
+rotations about the leg axis (but this does not overall affect the motion of the mobile platform)
+
+Steve-Gough platform is used in car and airplane cockpit simulators, as the platform moves with full
+6 DOF. Each leg can share load but the structure is obviously less restrictive than open chain.
+
+----
+
 
 
 
