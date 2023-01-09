@@ -1,0 +1,9 @@
+from: https://github.com/deepmind/mujoco/releases 
+
+how to: https://mujoco.readthedocs.io/en/stable/programming.html
+
+(getting started section)..
+Linux and macOS:   
+./simulate ../model/humanoid.xml
+./simulate ../model/humanoid100/humanoid100.xml
+

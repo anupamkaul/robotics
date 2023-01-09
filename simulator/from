@@ -1,0 +1,30 @@
+mujoco - multi joint dynamics with contact.
+A general purpose physics simulator useful for robotics, biomechanics, graphics, animations and other fields.
+
+
+https://www.roboti.us/index.html
+https://www.roboti.us/book/index.html
+https://mujoco.org/
+
+docs:
+https://mujoco.readthedocs.io/en/stable/overview.html
+https://mujoco.readthedocs.io/en/latest/overview.html
+
+In Oct 2021 DeepMind acquired mujoco and made it free / open source
+
+other than github source code, prebuilt libraries for mujoco are available at:
+https://github.com/deepmind/mujoco/releases
+
+For python bindings, to build from source:
+https://mujoco.readthedocs.io/en/latest/python.html#building-from-source
+
+references: https://github.com/openai/mujoco-py
+
+In addition to pre-builts, need to do (Run.sh):
+
+git clone https://github.com/deepmind/mujoco.git
+git clone https://github.com/PaulDanielML/MuJoCo_RL_UR5.git
+
+
+
+
