@@ -60,10 +60,18 @@ cd mujoco-2.3.1/bin
 # ./shadow_hand/scene_left.xml
 # ./shadow_hand/right_hand.xml
 
-# example:
+# examples and notes:
 # ./simulate ../../../mujoco_menagerie/anybotics_anymal_b/scene.xml
-# (use the controls menu to manipulate joint forces and watch the robot move/fall)
+# use the controls menu to manipulate joint forces and watch the robot move/fall
 
+#  ./simulate ../../../mujoco_menagerie/franka_emika_panda/scene.xml 
+#  in this one I can control 7 actuators via the actuator menu (like the dentist robot model)
 
+# ./simulate ../../../mujoco_menagerie/universal_robots_ur5e/scene.xml 
+# similar to franka_emika, this also I can manipulate actuators for pick & place. Seems like on pause setting actuators can 
+# simulate a run, and that joint values are modifiable only in the pause state. 
+
+# ./simulate ../../../mujoco_menagerie/robotiq_2f85/scene.xml 
+# this is a good one for upwards object grasping (set the control menu on right to grasp and ungrasp with fingers)
 
 
