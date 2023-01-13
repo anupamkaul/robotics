@@ -60,6 +60,10 @@ cd mujoco-2.3.1/bin
 # ./shadow_hand/scene_left.xml
 # ./shadow_hand/right_hand.xml
 
+# example:
+# ./simulate ../../../mujoco_menagerie/anybotics_anymal_b/scene.xml
+# (use the controls menu to manipulate joint forces and watch the robot move/fall)
+
 
 
 
