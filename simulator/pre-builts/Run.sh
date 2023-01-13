@@ -36,5 +36,30 @@ cd mujoco-2.3.1/bin
 # ./hammock/hammock.xml
 # ./tendon_arm/arm26.xml
 
+# additional models from menagerie are:
+# (using $PATH_MENAGERIE with ./simulate)
+
+# ./universal_robots_ur5e/ur5e.xml
+# ./universal_robots_ur5e/scene.xml
+# ./anybotics_anymal_b/scene.xml
+# ./anybotics_anymal_b/anymal_b.xml
+# ./robotiq_2f85/scene.xml
+# ./robotiq_2f85/2f85.xml
+# ./franka_emika_panda/scene.xml
+# ./franka_emika_panda/panda.xml
+# ./franka_emika_panda/hand.xml
+# ./franka_emika_panda/panda_nohand.xml
+# ./unitree_a1/a1.xml
+# ./unitree_a1/scene.xml
+# ./anybotics_anymal_c/scene.xml
+# ./anybotics_anymal_c/anymal_c.xml
+# ./agility_cassie/cassie.xml
+# ./agility_cassie/scene.xml
+# ./shadow_hand/left_hand.xml
+# ./shadow_hand/scene_right.xml
+# ./shadow_hand/scene_left.xml
+# ./shadow_hand/right_hand.xml
+
+
 
 
