@@ -43,6 +43,15 @@ git clone https://github.com/anupamkaul/mujoco_mpc.git
     # to-do: build instructions
     # see pre-builts/Run.sh on how to invoke xml models using simulate with mpc
 
+# 4. Install good papers
+
+git clone https://github.com/anupamkaul/robosimdocs.git docs
+    cd docs
+    git checkout master
+    git remote -v
+
+
+
 
 
 
