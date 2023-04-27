@@ -27,8 +27,6 @@ git clone https://github.com/anupamkaul/mujoco_menagerie.git
     # to-do: build instructions
     # see pre-builts/Run.sh on how to invoke xml models using simulate with menagerie
 
-	https://github.com/deepmind/mujoco_mpc.git
-
 # 3. Install mujoco_mpc on my linux machine
 
 echo -e "3. Installing mujoco_mpc (getting github source)...\n"
