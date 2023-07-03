@@ -19,6 +19,17 @@ A: The constraints implied by the joints must not be independent.
 ----
 
 
+1. Using the methods for determining the number of degrees of freedom of a rigid body in 3-dim space from the book and video, find the number of degrees of
+freedom of a rigid body in a conceptual 4-dimensional space. Answer should be an integer.
+
+10
+
+2. From q-1, indicate how many of the degrees of freedom are angular (rotational). Answer should be an integer.
+
+6
+
+(see DOF_N_Dim.txt)
+
 
 
 

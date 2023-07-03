@@ -1,0 +1,47 @@
+I calculate in general : for an N dimensional robot (a single link) the number of degrees of freedom as follows:
+
+I figured out general equations for DOF for the Nth dimension for a single rigid link and can express it both
+linearly and recursively:
+
+On observing the example in the book (and they use 3 points to show that the 3rd is redundant, for 2 dim)
+
+
+Dims				DOF
+
+Terms in equation
+
+(2)				2  +  (2-1)                    # terms equal no. of dims, first is always full N
+
+(3)				3  +  (3-1)  + (3-2)           # constraints increase per new point             
+
+thus 
+
+(4)				4  +  (4-1)  + (4-2) + (4-3)   # 4 terms, the constrainst are all on rotational values
+
+(5)				5  +  (5-1)  + (5-2) + (5-3) + (5-4)
+
+.. and so on
+
+Thus
+(N)				N  +  (N-1)  + (N-2) + .... + (N-(N-1))   (total N terms)
+				= Sqr(N) - (1+2+..N)
+				= Sqr(N) - Sigma(J)(J=1, N)
+
+				= Sigma(J)(J = 1, N) # see below
+
+------
+
+
+For 4 dims			DOF = 4 + 3 + 2 + 1 = 10     (angles = 10 - 4 = 6)
+For 5 dims			DOF = 5 + 4 + 3 + 2 + 1 = 15 (angles = 15 - 5 = 10)
+
+# Deriving a recursive relationship:
+
+For 6 dims			DOF = 6 + DOF(5) = 21        # recursive relationship   
+				Angles(DOF(6)) = DOF(6) - DOF(single point in 6) = 21 - 6 = 15 (= DOF (5))
+
+				Thus between N and N-1:
+				DOF(N) = N + DOF(N-1)
+				Angles(DOF(N)) = DOF(N-1) = (DOF(N) - N)
+
+
