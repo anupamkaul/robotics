@@ -22,13 +22,22 @@ A: The constraints implied by the joints must not be independent.
 1. Using the methods for determining the number of degrees of freedom of a rigid body in 3-dim space from the book and video, find the number of degrees of
 freedom of a rigid body in a conceptual 4-dimensional space. Answer should be an integer.
 
-10
+A: 10  (4 + 3 + 2 + 1)
 
 2. From q-1, indicate how many of the degrees of freedom are angular (rotational). Answer should be an integer.
 
-6
+A: 6   (all except the first 4)
 
-(see DOF_N_Dim.txt)
+(see DOF_N_Dim.txt for my general theory about DOFs of a link in Nth dimension)
+
+3. Assuming your arm has 7 dof and you're a waiter that has to carry a tray without spilling (horizontal). How many dofs?
+
+A: I just cal the constraints and minus from 7. Palm's shouldn't go up-down (that angle) and side-ways (that angle).
+(X-angle rotation is not OK (i.e. the up-down) and Z-angle rotation is not ok (the side-swerve). Technically the "base-swerve" is ok (The Y-angle rotation)
+
+So 7 - 2 = 5
+
+
 
 
 
