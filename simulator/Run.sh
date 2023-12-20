@@ -2,7 +2,7 @@
 
 # 1. Install mujoco on my linux machine
 
-echo -e "1. Installing mujoco (getting github source)...\n"
+echo -e "\n1. Installing mujoco (getting github source)...\n"
 
 git clone https://github.com/anupamkaul/mujoco.git
     cd mujoco
@@ -16,7 +16,7 @@ git clone https://github.com/anupamkaul/mujoco.git
 
 # 2. Install mujoco_menagerie on my linux machine
 
-echo -e "2. Installing mujoco_menagerie (getting github source)...\n"
+echo -e "\n2. Installing mujoco_menagerie (getting github source)...\n"
 
 git clone https://github.com/anupamkaul/mujoco_menagerie.git
     cd mujoco_menagerie
@@ -31,7 +31,7 @@ git clone https://github.com/anupamkaul/mujoco_menagerie.git
 
 # 3. Install mujoco_mpc on my linux machine
 
-echo -e "3. Installing mujoco_mpc (getting github source)...\n"
+echo -e "\n3. Installing mujoco_mpc (getting github source)...\n"
 
 git clone https://github.com/anupamkaul/mujoco_mpc.git
     cd mujoco_mpc
@@ -46,6 +46,7 @@ git clone https://github.com/anupamkaul/mujoco_mpc.git
 
 # 4. Install good papers
 
+echo -e "\n4. Installing good docs for reading ...\n"
 git clone https://github.com/anupamkaul/robosimdocs.git docs
     cd docs
     git checkout master
