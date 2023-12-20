@@ -12,6 +12,7 @@ git clone https://github.com/anupamkaul/mujoco.git
 
     # to-do (if needed): git pull upstream to master (and git merge with mine for latest updates)
     # to-do: build instructions
+    cd ..
 
 # 2. Install mujoco_menagerie on my linux machine
 
@@ -26,6 +27,7 @@ git clone https://github.com/anupamkaul/mujoco_menagerie.git
     # to-do (if needed): git pull upstream to master (and git merge with mine for latest updates)
     # to-do: build instructions
     # see pre-builts/Run.sh on how to invoke xml models using simulate with menagerie
+    cd ..
 
 # 3. Install mujoco_mpc on my linux machine
 
@@ -40,6 +42,7 @@ git clone https://github.com/anupamkaul/mujoco_mpc.git
     # to-do (if needed): git pull upstream to master (and git merge with mine for latest updates)
     # to-do: build instructions
     # see pre-builts/Run.sh on how to invoke xml models using simulate with mpc
+    cd ..
 
 # 4. Install good papers
 
