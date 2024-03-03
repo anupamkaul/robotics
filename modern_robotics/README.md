@@ -4,4 +4,7 @@ To play the simulator look at CoppeliaSim/InstallUbuntu/HowTo
 
 http://hades.mech.northwestern.edu/index.php/Coursera_Resources
 
+To launch CoppeliaSim on my macbook (installed via brew): 
+open /Applications/coppeliaSim.app
+
 
