@@ -16,4 +16,14 @@ fi
 #evince --page-label=$1 ProbabilisticRobotics.pdf&
 
 #mac (uses Preview app)
-open ProbabilisticRobotics.pdf&
+#open ProbabilisticRobotics.pdf&
+
+# (better fonts)
+#open -a Preview ./ProbabilisticRobotics.pdf&
+
+# (open to specific chapter)
+evince --page-label=$1 ProbabilisticRobotics.pdf&
+
+# e.g. for Chap 1
+# evince --page-label=13 ProbabilisticRobotics.pdf&
+
