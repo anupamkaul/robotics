@@ -1,7 +1,7 @@
 
 Start of
-Chap 2 ..... Page 31   (Configuration Space)
-Chap 3 ..... Page 77   (Rigid-Body motions)
+Chap 1 ..... Page 13   (Introduction)
+Chap 2 ..... Page 21   (Recursive State Estimation)
 Chap 4 ..... Page 155  (Forward Kinematics)
 Chap 5 ..... Page 189  (Velocity Kinematics and Statics)
 Chap 6 ..... Page 237  (Inverse Kinematics)
