@@ -39,6 +39,10 @@ def scan_all_folders(root_folder):
         str: The full path of each subfolder found.
     """
 
+    BOLD  = '\033[1m'
+    RESET = '\033[0m'
+    BLUE  = '\033[94m'
+
     command = ['git', 'remote', '-v']
     #command = ['ls', '-l']
 
@@ -85,7 +89,8 @@ def scan_all_folders(root_folder):
                 # you actually need to chdir into the dir, else this is executing at root level always ! 
                 result = subprocess.run(command, capture_output=True, text=True, check=True)
 
-                print("OUTPUT: \n For " , dirpath, " we have: ",result.stdout)
+                #print("For " , dirpath, "we have: ",result.stdout)
+                print(f"For {BOLD}{dirpath} {RESET} we have: {BOLD}{BLUE}{result.stdout}{RESET}")
                 json_txt = " { " + dirpath + " : " + result.stdout + " } "
                 f.write(json_txt)
 
