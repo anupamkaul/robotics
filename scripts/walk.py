@@ -43,7 +43,7 @@ def scan_all_folders(root_folder):
     #command = ['ls', '-l']
 
     rootpath = os.getcwd()
-    print("root path: ", rootpath) 
+    #print("root path: ", rootpath) 
 
     f = open("gitpaths.txt", "a") 
 
@@ -53,31 +53,31 @@ def scan_all_folders(root_folder):
         # dirnames is a list of subdirectories in dirpath
         # filenames is a list of files in dirpath
 
-        print("\nsingle loop")
-        print("dirpath: ", dirpath)
-        print("dirnames: ", dirnames)
-        print("\n")
+        #print("\nsingle loop")
+        #print("dirpath: ", dirpath)
+        #print("dirnames: ", dirnames)
+        #print("\n")
         #input()
         #continue # revelation : the os.walk construct itself is a depth first search
 
         os.chdir(rootpath)
         os.chdir(dirpath)
 
-        print("Evaluating current dir (chdir'd): ", os.getcwd(), "\n")
+        #print("Evaluating current dir (chdir'd): ", os.getcwd(), "\n")
 
         '''
         # template:
         # do stuff..
         # go back
         os.chdir(rootpath)
-        print("do stuff and go back to ", os.getcwd())
+        #print("do stuff and go back to ", os.getcwd())
         continue 
         '''
 
         if (os.path.exists(".git")):
 
             # execute the command and capture its output
-            print("found .git, getting git remote -v info now")
+            #print("found .git, getting git remote -v info now")
             #input()
 
             try:
@@ -96,10 +96,12 @@ def scan_all_folders(root_folder):
                 # artifacts below would report the same git remote data). We PRUNE this leaf out to stop
                 # further descents into search, while still relying on python's os.walk structure
 
+                '''
                 print("remove ", dirpath) 
                 print("first: ", dirnames, "\n")
                 #dirnames.remove(dirpath)
                 print("now: ", dirnames, "\n")
+                '''
 
             except subprocess.CalledProcessError as e:
 
@@ -111,9 +113,9 @@ def scan_all_folders(root_folder):
             except FileNotFoundError:
                 print(f"Error: Command '{command[0]}' not found.")
 
-                print("on error go back to parent folder")
+                #print("on error go back to parent folder")
                 os.chdir("../")
-                print("current dir: ", os.getcwd())
+                #print("current dir: ", os.getcwd())
                 #input()
 
         # Yield the current directory itself, if it's a subfolder of the root
@@ -132,9 +134,9 @@ def scan_all_folders(root_folder):
         #     # in subsequent iterations.
 
         
-        print("normal: go back to parent folder")
+        #print("normal: go back to parent folder")
         os.chdir(rootpath)
-        print("current dir: ", os.getcwd())
+        #print("current dir: ", os.getcwd())
         #input()
 
     f.close()
