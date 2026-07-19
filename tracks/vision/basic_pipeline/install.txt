@@ -1,0 +1,11 @@
+brew install opencv onnxruntime
+(check: brew --prefix opencv)
+
+# See the exact path to your OpenCV installation
+brew --prefix opencv
+
+# List all header folders inside Homebrew's include path
+ls /opt/homebrew/include
+
+# Verify that the ONNX Runtime library file exists
+ls /opt/homebrew/lib/libonnxruntime*

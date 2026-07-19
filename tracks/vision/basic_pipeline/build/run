@@ -1,0 +1,8 @@
+# Clean up any partial configuration files
+rm -rf *
+
+# Re-run the configuration step
+cmake ..
+
+# Compile your executable
+make -j$(sysctl -n hw.ncpu)
