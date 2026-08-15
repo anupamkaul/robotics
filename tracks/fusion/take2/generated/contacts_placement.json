@@ -1,0 +1,16 @@
+{
+    "reference_lat": 37.7749,
+    "reference_lon": -122.4194,
+    "contacts": [
+        {"id": 101, "lat": 37.7760, "lon": -122.4180, "v_east": -2.0, "v_north": -1.5, "description": "Cargo Ship"},
+        {"id": 102, "lat": 37.7735, "lon": -122.4210, "v_east": 3.0, "v_north": 1.0, "description": "Fishing Boat"},
+        {"id": 103, "lat": 37.7780, "lon": -122.4230, "v_east": 1.5, "v_north": -3.0, "description": "Coast Guard"},
+        {"id": 104, "lat": 37.7710, "lon": -122.4160, "v_east": -1.0, "v_north": 2.5, "description": "Yacht"},
+        {"id": 105, "lat": 37.7795, "lon": -122.4150, "v_east": -4.0, "v_north": -2.0, "description": "Container Vessel"},
+        {"id": 106, "lat": 37.7720, "lon": -122.4250, "v_east": 2.0, "v_north": 2.0, "description": "Ferry"},
+        {"id": 107, "lat": 37.7755, "lon": -122.4260, "v_east": 0.5, "v_north": -1.0, "description": "Sailboat"},
+        {"id": 108, "lat": 37.7772, "lon": -122.4199, "v_east": -2.5, "v_north": 3.0, "description": "Tugboat"},
+        {"id": 109, "lat": 37.7730, "lon": -122.4140, "v_east": 4.0, "v_north": -0.5, "description": "Speedboat"},
+        {"id": 110, "lat": 37.7765, "lon": -122.4225, "v_east": -3.0, "v_north": 0.5, "description": "JetSki"}
+    ]
+}
