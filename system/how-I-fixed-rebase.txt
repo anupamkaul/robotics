@@ -1,0 +1,213 @@
+Previous commits were checked in without my email or username set globally 
+for my personal macbopk pro.
+
+After setting them and verifying them, this is exactly what I did for the 7 commits
+that I needed to rebase (changed PICK to EDIT)
+
+anupamkaul@anupamkauls-MacBook-Pro robotics % git rebase -i HEAD~10
+Stopped at 92f2b17...  # Add book on multiple view geometry
+You can amend the commit now, with
+
+  git commit --amend 
+
+Once you are satisfied with your changes, run
+
+  git rebase --continue
+anupamkaul@anupamkauls-MacBook-Pro robotics % git commit --amend --author="anupamkaul <anupam.kaul@yahoo.com>" --no-edit 
+[detached HEAD 7b1ade8] Add book on multiple view geometry
+ Date: Sun Jul 5 15:04:50 2026 -0700
+ 1 file changed, 41200 insertions(+)
+ create mode 100644 multiple_view_geometry/Book/Multiple_View_Geometry_in_Computer_Vision-EN.pdf
+anupamkaul@anupamkauls-MacBook-Pro robotics % git rebase --continue
+Stopped at 0ec7c54...  # Add perception pipeline scaffolding and basic YoloV8 utilities
+You can amend the commit now, with
+
+  git commit --amend 
+
+Once you are satisfied with your changes, run
+
+  git rebase --continue
+anupamkaul@anupamkauls-MacBook-Pro robotics % git commit --amend --author="anupamkaul <anupam.kaul@yahoo.com>" --no-edit
+[detached HEAD 00fb332] Add perception pipeline scaffolding and basic YoloV8 utilities
+ Date: Sun Jul 19 14:27:27 2026 -0700
+ 42 files changed, 5187 insertions(+)
+ create mode 100644 tracks/vision/Tools/OUTPUT.txt
+ create mode 100644 tracks/vision/Tools/runs/detect/predict-2/people-detection.mp4
+ create mode 100644 tracks/vision/Tools/runs/detect/predict-3/classroom.mp4
+ create mode 100644 tracks/vision/Tools/runs/detect/predict-4/classroom.mp4
+ create mode 100644 tracks/vision/Tools/runs/detect/predict/people-detection.mp4
+ create mode 160000 tracks/vision/Tools/sample-videos
+ create mode 100644 tracks/vision/Tools/ultralytics-howto
+ create mode 100644 tracks/vision/Tools/use-YOLO.py
+ create mode 100644 tracks/vision/Tools/yolov8n.pt
+ create mode 100644 tracks/vision/basic_pipeline/CMakeLists.txt
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeCache.txt
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/4.4.0/CMakeCXXCompiler.cmake
+ create mode 100755 tracks/vision/basic_pipeline/build/CMakeFiles/4.4.0/CMakeDetermineCompilerABI_CXX.bin
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/4.4.0/CMakeSystem.cmake
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/4.4.0/CompilerIdCXX/CMakeCXXCompilerId.cpp
+ create mode 100755 tracks/vision/basic_pipeline/build/CMakeFiles/4.4.0/CompilerIdCXX/a.out
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/4.4.0/CompilerIdCXX/apple-sdk.cpp
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/CMakeConfigureLog.yaml
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/CMakeDirectoryInformation.cmake
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/InstallScripts.json
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/Makefile.cmake
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/Makefile2
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/TargetDirectories.txt
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/cmake.check_cache
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/perception_pipeline.dir/DependInfo.cmake
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/perception_pipeline.dir/build.make
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/perception_pipeline.dir/cmake_clean.cmake
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/perception_pipeline.dir/compiler_depend.make
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/perception_pipeline.dir/compiler_depend.ts
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/perception_pipeline.dir/depend.make
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/perception_pipeline.dir/flags.make
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/perception_pipeline.dir/link.txt
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/perception_pipeline.dir/minimal_pipeline.cpp.o
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/perception_pipeline.dir/minimal_pipeline.cpp.o.d
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/perception_pipeline.dir/progress.make
+ create mode 100644 tracks/vision/basic_pipeline/build/CMakeFiles/progress.marks
+ create mode 100644 tracks/vision/basic_pipeline/build/Makefile
+ create mode 100644 tracks/vision/basic_pipeline/build/cmake_install.cmake
+ create mode 100755 tracks/vision/basic_pipeline/build/perception_pipeline
+ create mode 100755 tracks/vision/basic_pipeline/build/run
+ create mode 100644 tracks/vision/basic_pipeline/install.txt
+ create mode 100644 tracks/vision/basic_pipeline/minimal_pipeline.cpp
+anupamkaul@anupamkauls-MacBook-Pro robotics % git rebase --continue
+Stopped at 0c99772...  # add new video files
+You can amend the commit now, with
+
+  git commit --amend 
+
+Once you are satisfied with your changes, run
+
+  git rebase --continue
+anupamkaul@anupamkauls-MacBook-Pro robotics % git commit --amend --author="anupamkaul <anupam.kaul@yahoo.com>" --no-edit
+[detached HEAD d55a7f4] add new video files
+ Date: Sun Jul 19 23:10:13 2026 -0700
+ 58 files changed, 409 insertions(+), 1 deletion(-)
+ delete mode 160000 tracks/vision/Tools/sample-videos
+ create mode 100644 tracks/vision/Tools/sample-videos/LICENSE
+ create mode 100644 tracks/vision/Tools/sample-videos/README.md
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/again.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/bird.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/book.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/brother.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/eat.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/help.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/hungry.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/learn.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/milk.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/night.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/no.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/please.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/school.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/sister.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/sorry.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/student.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/thanks.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/walk.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/want.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/asl_gestures/yes.mkv
+ create mode 100644 tracks/vision/Tools/sample-videos/bolt-detection.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/bolt-multi-size-detection.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/bottle-detection.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/car-detection.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/classroom.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/driver-action-recognition.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/face-demographics-walking-and-pause.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/face-demographics-walking.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/fruit-and-vegetable-detection.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/head-pose-face-detection-female-and-male.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/head-pose-face-detection-female.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/head-pose-face-detection-male.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/one-by-one-person-detection.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/people-detection.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/person-bicycle-car-detection.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/a
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/bolt-detection.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/bolt-multi-size-detection.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/bottle-detection.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/car-detection.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/classroom.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/driver-action-recognition.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/face-demographics-walking-and-pause.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/face-demographics-walking.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/fruit-and-vegetable-detection.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/head-pose-face-detection-female-and-male.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/head-pose-face-detection-female.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/head-pose-face-detection-male.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/one-by-one-person-detection.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/people-detection.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/person-bicycle-car-detection.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/store-aisle-detection.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/preview/worker-zone-detection.gif
+ create mode 100644 tracks/vision/Tools/sample-videos/store-aisle-detection.mp4
+ create mode 100644 tracks/vision/Tools/sample-videos/worker-zone-detection.mp4
+anupamkaul@anupamkauls-MacBook-Pro robotics % git rebase --continue
+Stopped at fa6cafa...  # Add predict-5
+You can amend the commit now, with
+
+  git commit --amend 
+
+Once you are satisfied with your changes, run
+
+  git rebase --continue
+anupamkaul@anupamkauls-MacBook-Pro robotics % git commit --amend --author="anupamkaul <anupam.kaul@yahoo.com>" --no-edit
+[detached HEAD b02bb3c] Add predict-5
+ Date: Sun Aug 2 21:39:03 2026 -0700
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 tracks/vision/Tools/runs/detect/predict-5/classroom.mp4
+anupamkaul@anupamkauls-MacBook-Pro robotics % git rebase --continue
+Stopped at 6a33e42...  # Sample fusion using Kalman Filter and basic simulation
+You can amend the commit now, with
+
+  git commit --amend 
+
+Once you are satisfied with your changes, run
+
+  git rebase --continue
+anupamkaul@anupamkauls-MacBook-Pro robotics % git commit --amend --author="anupamkaul <anupam.kaul@yahoo.com>" --no-edit
+[detached HEAD 4506704] Sample fusion using Kalman Filter and basic simulation
+ Date: Sat Aug 15 14:54:22 2026 -0700
+ 3 files changed, 224 insertions(+)
+ create mode 100644 tracks/fusion/take1/generated/perception_simulation_output.png
+ create mode 100644 tracks/fusion/take1/sensor_fusion.py
+ create mode 100644 tracks/fusion/take1/simulation.py
+anupamkaul@anupamkauls-MacBook-Pro robotics % git rebase --continue
+Stopped at 8100ea1...  # Improve the fusion : add 10 contacts with ability to change values for the sensor fusion
+You can amend the commit now, with
+
+  git commit --amend 
+
+Once you are satisfied with your changes, run
+
+  git rebase --continue
+anupamkaul@anupamkauls-MacBook-Pro robotics % git commit --amend --author="anupamkaul <anupam.kaul@yahoo.com>" --no-edit
+[detached HEAD f9d5586] Improve the fusion : add 10 contacts with ability to change values for the sensor fusion
+ Date: Sat Aug 15 15:11:08 2026 -0700
+ 4 files changed, 278 insertions(+)
+ create mode 100644 tracks/fusion/take2/generated/contacts_placement.json
+ create mode 100644 tracks/fusion/take2/generated/running_tracks.mp4
+ create mode 100644 tracks/fusion/take2/sensor_fusion.py
+ create mode 100644 tracks/fusion/take2/simulation.py
+anupamkaul@anupamkauls-MacBook-Pro robotics % git rebase --continue
+Stopped at 7dc7afa...  # Added more variances (camera/radar noise) as tunable parameters in gui
+You can amend the commit now, with
+
+  git commit --amend 
+
+Once you are satisfied with your changes, run
+
+  git rebase --continue
+anupamkaul@anupamkauls-MacBook-Pro robotics % git commit --amend --author="anupamkaul <anupam.kaul@yahoo.com>" --no-edit
+[detached HEAD f7371ea] Added more variances (camera/radar noise) as tunable parameters in gui
+ Date: Fri Aug 21 11:27:24 2026 -0700
+ 3 files changed, 419 insertions(+)
+ create mode 100644 tracks/fusion/take3/generated/contacts_placement.json
+ create mode 100644 tracks/fusion/take3/sensor_fusion.py
+ create mode 100644 tracks/fusion/take3/simulation.py
+anupamkaul@anupamkauls-MacBook-Pro robotics % git rebase --continue
+Successfully rebased and updated refs/heads/main.
+
+git push --force-with-lease origin main
