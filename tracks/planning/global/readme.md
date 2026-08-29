@@ -1,0 +1,1 @@
+a global planner for a maritime drone that uses H3C cells and A* searching as the global planner code. Write this in C++. One file. In the second file. write simulation code (visualizable) that allows arbitrary obstacles to be set. I should be able to modify the distances for the waypoints all the way to 10K miles.

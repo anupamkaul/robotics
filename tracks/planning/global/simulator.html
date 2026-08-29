@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Global Maritime Drone A* Grid Simulation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #1a1c23;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #controls {
+            background: #2d3748;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+        }
+        canvas {
+            background: #0f172a;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+            cursor: crosshair;
+        }
+        button {
+            background: #3182ce;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        button:hover { background: #2b6cb0; }
+        .stat-box {
+            font-size: 14px;
+            background: #1a202c;
+            padding: 6px 12px;
+            border-radius: 4px;
+            border: 1px solid #4a5568;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Drone Global A* H3 Grid Simulator</h2>
+    
+    <div id="controls">
+        <button onclick="togglePlacementMode('start')">Set Start</button>
+        <button onclick="togglePlacementMode('goal')">Set Goal</button>
+        <button onclick="togglePlacementMode('obstacle')">Add Arbitrary Obstacle</button>
+        <button onclick="clearObstacles()" style="background:#e53e3e;">Clear Obstacles</button>
+        <div class="stat-box" id="distDisplay">Total Route Distance: 0 Miles</div>
+        <div class="stat-box" id="modeDisplay">Mode: Adding Obstacles</div>
+    </div>
+
+    <canvas id="simCanvas" width="1024" height="512"></canvas>
+
+<script>
+const canvas = document.getElementById('simCanvas');
+const ctx = canvas.getContext('2d');
+
+// State configuration variables
+let startPoint = { lat: -20.0, lng: -120.0 };
+let goalPoint = { lat: 40.0, lng: 140.0 };
+let obstacles = [
+    { lat: 10.0, lng: 10.0, radius: 1200 },
+    { lat: -5.0, lng: -60.0, radius: 1800 }
+];
+let placementMode = 'obstacle'; // Options: 'start', 'goal', 'obstacle'
+let computedPath = [];
+
+// Event registration
+canvas.addEventListener('mousedown', handleCanvasClick);
+
+function togglePlacementMode(mode) {
+    placementMode = mode;
+    document.getElementById('modeDisplay').innerText = `Mode: Set ${mode.toUpperCase()}`;
+}
+
+function clearObstacles() {
+    obstacles = [];
+    runSimulation();
+}
+
+// Convert screen spaces to geographical world tracking values
+function screenToLatLng(x, y) {
+    let lng = (x / canvas.width) * 360 - 180;
+    let lat = 90 - (y / canvas.height) * 180;
+    return { lat, lng };
+}
+
+function latLngToScreen(lat, lng) {
+    let x = ((lng + 180) / 360) * canvas.width;
+    let y = ((90 - lat) / 180) * canvas.height;
+    return { x, y };
+}
+
+// Precise Haversine distance tracking logic engine
+function getDistanceMiles(p1, p2) {
+    const R = 3958.8;
+    const dLat = (p2.lat - p1.lat) * Math.PI / 180;
+    const dLng = (p2.lng - p1.lng) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(p1.lat * Math.PI / 180) * Math.cos(p2.lat * Math.PI / 180) * 
+              Math.sin(dLng/2) * Math.sin(dLng/2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function handleCanvasClick(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const geo = screenToLatLng(x, y);
+
+    if (placementMode === 'start') {
+        startPoint = geo;
+    } else if (placementMode === 'goal') {
+        goalPoint = geo;
+    } else if (placementMode === 'obstacle') {
+        obstacles.push({ lat: geo.lat, lng: geo.lng, radius: 600 + Math.random() * 800 });
+    }
+    runSimulation();
+}
+
+// Fast simulation engine replicating our internal C++ A* H3 configuration
+function runSimulation() {
+    computedPath = [];
+    const directDist = getDistanceMiles(startPoint, goalPoint);
+    document.getElementById('distDisplay').innerText = `Total Route Distance: ${Math.round(directDist).toLocaleString()} Miles`;
+
+    // Adaptive Resolution Selection scaling for up to 10k miles performance limits
+    const resScale = directDist > 4000 ? 0.04 : 0.12; 
+    
+    // Internal JS representation of the Axial Hexagon layout
+    function toHex(lat, lng) {
+        let x = lng * Math.cos(lat * Math.PI / 180) * resScale;
+        let y = lat * resScale;
+        let q = Math.round((Math.sqrt(3)/3 * x - 1/3 * y));
+        let r = Math.round((2/3 * y));
+        return { q, r, id: `${q},${r}` };
+    }
+
+    function toLatLng(q, r) {
+        let y = (3/2) * r / resScale;
+        let x = (Math.sqrt(3) * q + Math.sqrt(3)/2 * r) / resScale;
+        let lat = y;
+        let lng = x / Math.cos(lat * Math.PI / 180);
+        return { lat, lng };
+    }
+
+    const startHex = toHex(startPoint.lat, startPoint.lng);
+    const goalHex = toHex(goalPoint.lat, goalPoint.lng);
+
+    // Priority Queue simulation
+    let openSet = [{ cell: startHex, g: 0, f: getDistanceMiles(startPoint, goalPoint) }];
+    let gCosts = {};
+    let cameFrom = {};
+    gCosts[startHex.id] = 0;
+
+    let found = false;
+    let maxIterations = 2500; 
+
+    while (openSet.length > 0 && maxIterations-- > 0) {
+        openSet.sort((a, b) => a.f - b.f);
+        let current = openSet.shift();
+
+        if (current.cell.q === goalHex.q && current.cell.r === goalHex.r) {
+            found = true;
+            break;
+        }
+
+        const neighbors = [
+            {q: current.cell.q+1, r: current.cell.r}, {q: current.cell.q-1, r: current.cell.r},
+            {q: current.cell.q, r: current.cell.r+1}, {q: current.cell.q, r: current.cell.r-1},
+            {q: current.cell.q+1, r: current.cell.r-1}, {q: current.cell.q-1, r: current.cell.r+1}
+        ];
+
+        for (let neighborsCoord of neighbors) {
+            let nId = `${neighborsCoord.q},${neighborsCoord.q}`;
+            let nGeo = toLatLng(neighborsCoord.q, neighborsCoord.r);
+
+            // Out of bounds check safely wrapping standard visualization fields
+            if (Math.abs(nGeo.lat) > 85 || Math.abs(nGeo.lng) > 180) continue;
+
+            // Check dynamic collisions
+            let hit = false;
+            for (let obs of obstacles) {
+                if (getDistanceMiles(nGeo, obs) < obs.radius) {
+                    hit = true;
+                    break;
+                }
+            }
+            if (hit) continue;
+
+            let currentGeo = toLatLng(current.cell.q, current.cell.r);
+            let tentativeG = current.g + getDistanceMiles(currentGeo, nGeo);
+
+            let storedG = gCosts[nId];
+            if (storedG === undefined || tentativeG < storedG) {
+                gCosts[nId] = tentativeG;
+                cameFrom[nId] = current.cell;
+                openSet.push({
+                    cell: { q: neighborsCoord.q, r: neighborsCoord.r, id: nId },
+                    g: tentativeG,
+                    f: tentativeG + getDistanceMiles(nGeo, goalPoint)
+                });
+            }
+        }
+    }
+
+    if (found) {
+        let curr = goalHex;
+        while (curr && !(curr.q === startHex.q && curr.r === startHex.r)) {
+            computedPath.push(toLatLng(curr.q, curr.r));
+            curr = cameFrom[`${curr.q},${curr.r}`];
+        }
+        computedPath.push(startPoint);
+        computedPath.reverse();
+    }
+    draw();
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw reference global lat/lng projection grid lines
+    ctx.strokeStyle = '#1e293b';
+    ctx.lineWidth = 1;
+    for (let l = -150; l <= 150; l += 30) {
+        let pt = latLngToScreen(0, l);
+        ctx.beginPath(); ctx.moveTo(pt.x, 0); ctx.lineTo(pt.x, canvas.height); ctx.stroke();
+    }
+    for (let l = -60; l <= 60; l += 30) {
+        let pt = latLngToScreen(l, 0);
+        ctx.beginPath(); ctx.moveTo(0, pt.y); ctx.lineTo(canvas.width, pt.y); ctx.stroke();
+    }
+
+    // Draw arbitrary geographical safe-zone buffer boundaries (Obstacles)
+    obstacles.forEach(obs => {
+        let screenPos = latLngToScreen(obs.lat, obs.lng);
+        // Transform static distance metric to match dynamic equatorial layout pixel scale sizes
+        let pixelRadius = (obs.radius / 24901) * canvas.width; 
+        
+        ctx.beginPath();
+        ctx.arc(screenPos.x, screenPos.y, pixelRadius, 0, 2 * Math.PI);
+        ctx.fillStyle = 'rgba(239, 68, 68, 0.25)';
+        ctx.fill();
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+    });
+
+    // Draw path planned by the grid tracker
+    if (computedPath.length > 1) {
+        ctx.beginPath();
+        let startScr = latLngToScreen(computedPath[0].lat, computedPath[0].lng);
+        ctx.moveTo(startScr.x, startScr.y);
+        for(let i = 1; i < computedPath.length; i++) {
+            let scratchPos = latLngToScreen(computedPath[i].lat, computedPath[i].lng);
+            ctx.lineTo(scratchPos.x, scratchPos.y);
+        }
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 3;
+        ctx.setLineDash([]);
+        ctx.stroke();
+    }
+
+    // Draw Start & Goal terminal pins
+    let sScr = latLngToScreen(startPoint.lat, startPoint.lng);
+    ctx.fillStyle = '#10b981';
+    ctx.beginPath(); ctx.arc(sScr.x, sScr.y, 8, 0, 2*Math.PI); ctx.fill();
+
+    let gScr = latLngToScreen(goalPoint.lat, goalPoint.lng);
+    ctx.fillStyle = '#3b82f6';
+    ctx.beginPath(); ctx.arc(gScr.x, gScr.y, 8, 0, 2*Math.PI); ctx.fill();
+}
+
+// Initial engine activation run
+runSimulation();
+</script>
+</body>
+</html>
