@@ -147,6 +147,9 @@ std::vector<LatLng> PlanGlobalRoute(LatLng start, LatLng goal, const std::vector
     H3Cell start_cell = LatLngToH3(start, resolution_scale);
     H3Cell goal_cell = LatLngToH3(goal, resolution_scale);
 
+    std::cout << "H3 start cell: (q " << start_cell.q << ") (r " << start_cell.r << ") " << std::endl;
+    std::cout << "H3 goal  cell: (q " << goal_cell.q  << ") (r " << goal_cell.r <<  ") " <<  std::endl;
+
     std::priority_queue<AStarNode, std::vector<AStarNode>, CompareNode> open_set;
     std::unordered_map<H3Cell, double> g_costs;
     std::unordered_map<H3Cell, H3Cell> came_from;
@@ -161,6 +164,7 @@ std::vector<LatLng> PlanGlobalRoute(LatLng start, LatLng goal, const std::vector
         AStarNode current = open_set.top();
         open_set.pop();
 
+        std::cout << "\rH3 current cell: (q " << current.cell.q  << ") (r " << current.cell.r <<  ") " <<  std::flush;
         if (current.cell == goal_cell) {
             found = true;
             break;
