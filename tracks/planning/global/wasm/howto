@@ -1,0 +1,8 @@
+compile (uses wasm/emcc to generate the .js from the cpp)
+start-sim (launch python server at local port 8000)
+launch-sim (chrome tab open the server -- see the launch-sim file)
+
+put cout and such to debug
+
+
+

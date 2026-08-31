@@ -1,0 +1,7 @@
+run the start-sim script here. basically python runs here and allows localhost access from any path down this path
+(thus I have access to both the simulator.html in basic and wasm)
+
+to run a simulator of choice in chrome window:
+
+http://localhost:8000/wasm/simulator.html
+http://localhost:8000/basic/simulator.html

@@ -2,27 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>C++ Powered Drone Global Planner Simulation</title>
+    <title>C++ Powered Saildrone Simulation with Profiler</title>
     <style>
-        body { font-family: sans-serif; background: #1a1c23; color: #e2e8f0; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        #controls { background: #2d3748; padding: 15px; border-radius: 8px; margin-bottom: 15px; display: flex; gap: 15px; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-        canvas { background: #0f172a; border-radius: 8px; cursor: crosshair; }
-        button { background: #3182ce; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        button:hover { background: #2b6cb0; }
-        .stat-box { font-size: 14px; background: #1a202c; padding: 6px 12px; border-radius: 4px; border: 1px solid #4a5568; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #111827; color: #f3f4f6; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        #controls { background: #1f2937; padding: 15px; border-radius: 8px; margin-bottom: 15px; display: flex; gap: 12px; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.4); flex-wrap: wrap; }
+        #profiler-dash { display: flex; gap: 15px; background: #111827; border: 1px solid #374151; padding: 10px 20px; border-radius: 6px; margin-bottom: 15px; width: 984px; justify-content: space-around; font-family: monospace; }
+        canvas { background: #030712; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); border: 1px solid #374151; }
+        button { background: #2563eb; color: white; border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 13px; }
+        button:hover { background: #1d4ed8; }
+        .metric-val { color: #10b981; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <h2>Drone Simulation (Exercising Native C++ Global Planner)</h2>
+    <h2>Saildrone Simulation (Exercising Native C++ Global Planner)</h2>
     
     <div id="controls">
         <button onclick="setMode('start')">Set Start</button>
         <button onclick="setMode('goal')">Set Goal</button>
         <button onclick="setMode('obstacle')">Add Obstacle</button>
-        <button onclick="clearObstacles()" style="background:#e53e3e;">Clear</button>
-        <div class="stat-box" id="distDisplay">Total Route Distance: Calculating...</div>
-        <div class="stat-box" id="modeDisplay">Mode: Adding Obstacles</div>
+        <button onclick="clearObstacles()" style="background:#dc2626;">Clear Map</button>
+        <div style="font-size: 14px; margin-left: 10px;" id="modeDisplay">Mode: Adding Obstacles</div>
+    </div>
+
+    <div id="profiler-dash">
+        <div>Total Trajectory: <span class="metric-val" id="profDist">0 Miles</span></div>
+        <div>C++ Search Time: <span class="metric-val" id="profTime">Waiting...</span></div>
+        <div>Nodes Tracked: <span class="metric-val" id="profNodes">0</span></div>
+        <div>Wasm Overhead: <span class="metric-val" id="profWasm">0.00 ms</span></div>
     </div>
 
     <canvas id="simCanvas" width="1024" height="512"></canvas>
@@ -31,20 +38,30 @@
 const canvas = document.getElementById('simCanvas');
 const ctx = canvas.getContext('2d');
 
-let startPoint = { lat: -20.0, lng: -120.0 };
+let startPoint = { lat: -30.0, lng: -140.0 };
 let goalPoint = { lat: 40.0, lng: 140.0 };
-let obstacles = [{ lat: 10.0, lng: 10.0, radius: 1200 }];
+let obstacles = [{ lat: 15.0, lng: 10.0, radius: 1500 }, { lat: 5.0, lng: -70.0, radius: 1000 }];
 let placementMode = 'obstacle';
 let computedPath = [];
 let wasmPlanner = null;
 
-// Catch window events to hook into WebAssembly Module loading states
-window.Module = {
+// Ensure the grid background layout renders instantly upon browser launch
+draw();
+
+var Module = {
     onRuntimeInitialized: function() {
-        console.log("C++ Core Engine Loaded Successfully into WebAssembly Runtime.");
-        // Wrap the C++ function using Emscripten api configurations
-        wasmPlanner = Module.cwrap('RunWasmPlanner', 'string', ['number', 'number', 'number', 'number', 'number', 'number']);
-        runSimulation();
+        console.log("C++ Core Engine Loaded Successfully.");
+        try {
+            if (typeof Module.cwrap === 'function') {
+                wasmPlanner = Module.cwrap('RunWasmPlanner', 'string', ['number', 'number', 'number', 'number', 'number', 'number']);
+                runSimulation();
+            } else {
+                console.error("Module.cwrap is missing from runtime settings.");
+                document.getElementById('profTime').innerText = "Linker Error";
+            }
+        } catch (err) {
+            console.error("Initialization exception: ", err);
+        }
     }
 };
 
@@ -54,7 +71,6 @@ function setMode(mode) {
 }
 
 function clearObstacles() { obstacles = []; runSimulation(); }
-
 function screenToLatLng(x, y) { return { lat: 90 - (y / canvas.height) * 180, lng: (x / canvas.width) * 360 - 180 }; }
 function latLngToScreen(lat, lng) { return { x: ((lng + 180) / 360) * canvas.width, y: ((90 - lat) / 180) * canvas.height }; }
 
@@ -71,56 +87,85 @@ canvas.addEventListener('mousedown', (e) => {
     if (placementMode === 'start') startPoint = geo;
     else if (placementMode === 'goal') goalPoint = geo;
     else if (placementMode === 'obstacle') obstacles.push({ lat: geo.lat, lng: geo.lng, radius: 800 });
-    runSimulation();
+    
+    if (wasmPlanner) {
+        runSimulation();
+    } else {
+        draw();
+    }
 });
 
-// Primary wrapper driving code execution straight through compiled C++ boundaries
 function runSimulation() {
     if (!wasmPlanner) return;
 
     const directDist = getDistanceMiles(startPoint, goalPoint);
-    document.getElementById('distDisplay').innerText = `Total Route Distance: ${Math.round(directDist).toLocaleString()} Miles`;
+    document.getElementById('profDist').innerText = `${Math.round(directDist).toLocaleString()} Miles`;
 
-    // Flatten our multi-dimensional obstacle data structs into continuous float vectors
     let flatObstacles = [];
     obstacles.forEach(o => { flatObstacles.push(o.lat, o.lng, o.radius); });
 
-    // Allocate heap space buffer memory dynamically for WebAssembly to safely pull from
     let typedArray = new Float64Array(flatObstacles);
     let buffer = Module._malloc(typedArray.length * typedArray.BYTES_PER_ELEMENT);
     Module.HEAPF64.set(typedArray, buffer / typedArray.BYTES_PER_ELEMENT);
 
-    // EXECUTE THE C++ PLANNERS METHOD DIRECTLY
+    const t0 = window.performance.now();
     let rawResultString = wasmPlanner(startPoint.lat, startPoint.lng, goalPoint.lat, goalPoint.lng, buffer, obstacles.length);
+    const t1 = window.performance.now();
 
-    // Free the heap memory block to prevent application resource leaks
     Module._free(buffer);
 
-    // Convert string coordinates back into points
     computedPath = [];
     if (rawResultString && rawResultString !== "ERROR") {
-        let coordinatePairs = rawResultString.split('|');
-        coordinatePairs.forEach(pair => {
-            let parts = pair.split(',');
-            computedPath.push({ lat: parseFloat(parts[0]), lng: parseFloat(parts[1]) });
-        });
+        let sections = rawResultString.split(';');
+        if (sections.length >= 3) {
+            // Using safe array methods instead of bracket tokens to prevent formatting bugs
+            let cppMicroseconds = sections.shift();
+            let nodesEvaluated = sections.shift();
+            let pathData = sections.join(';');
+
+            document.getElementById('profTime').innerText = `${parseInt(cppMicroseconds).toLocaleString()} μs (${(cppMicroseconds/1000).toFixed(2)} ms)`;
+            document.getElementById('profNodes').innerText = nodesEvaluated;
+            document.getElementById('profWasm').innerText = `${(t1 - t0).toFixed(2)} ms`;
+
+            if (pathData) {
+                let coordinatePairs = pathData.split('|');
+                coordinatePairs.forEach(pair => {
+                    let parts = pair.split(',');
+                    if (parts.length === 2) {
+                        computedPath.push({ lat: parseFloat(parts[0]), lng: parseFloat(parts[1]) });
+                    }
+                });
+            }
+        }
+    } else {
+        document.getElementById('profTime').innerText = "No Route Found";
     }
     draw();
 }
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = '#1e293b';
+    
+    // Draw Background Grid
+    ctx.strokeStyle = '#1f2937';
+    ctx.lineWidth = 1;
     for (let l = -150; l <= 150; l += 30) {
         let pt = latLngToScreen(0, l); ctx.beginPath(); ctx.moveTo(pt.x, 0); ctx.lineTo(pt.x, canvas.height); ctx.stroke();
     }
+    for (let l = -60; l <= 60; l += 30) {
+        let pt = latLngToScreen(l, 0); ctx.beginPath(); ctx.moveTo(0, pt.y); ctx.lineTo(canvas.width, pt.y); ctx.stroke();
+    }
+
+    // Draw Threat Ring Obstacles
     obstacles.forEach(obs => {
         let screenPos = latLngToScreen(obs.lat, obs.lng);
         let pixelRadius = (obs.radius / 24901) * canvas.width;
         ctx.beginPath(); ctx.arc(screenPos.x, screenPos.y, pixelRadius, 0, 2 * Math.PI);
-        ctx.fillStyle = 'rgba(239, 68, 68, 0.25)'; ctx.fill();
-        ctx.strokeStyle = '#ef4444'; ctx.stroke();
+        ctx.fillStyle = 'rgba(239, 68, 64, 0.2)'; ctx.fill();
+        ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 1; ctx.stroke();
     });
+
+    // Draw C++ Calculated Path Route Trajectory
     if (computedPath.length > 1) {
         ctx.beginPath();
         let startScr = latLngToScreen(computedPath[0].lat, computedPath[0].lng);
@@ -131,13 +176,16 @@ function draw() {
         }
         ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 3; ctx.stroke();
     }
+
+    // Draw Start Node Terminal Point (Green)
     let sScr = latLngToScreen(startPoint.lat, startPoint.lng);
     ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(sScr.x, sScr.y, 8, 0, 2*Math.PI); ctx.fill();
+
+    // Draw Goal Node Terminal Point (Blue)
     let gScr = latLngToScreen(goalPoint.lat, goalPoint.lng);
     ctx.fillStyle = '#3b82f6'; ctx.beginPath(); ctx.arc(gScr.x, gScr.y, 8, 0, 2*Math.PI); ctx.fill();
 }
 </script>
-<!-- Include the target emitted auto-generated glue code script produced during compilation compilation -->
 <script src="global_planner.js"></script>
 </body>
 </html>
