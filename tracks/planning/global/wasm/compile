@@ -1,0 +1,1 @@
+em++ global_planner.cpp -o global_planner.js -s EXPORTED_FUNCTIONS='["_RunWasmPlanner", "_main", "_malloc", "_free"]' -s EXPORTED_RUNTIME_METHODS='["cwrap"]' -s ALLOW_MEMORY_GROWTH=1 -O3
