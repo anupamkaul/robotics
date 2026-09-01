@@ -7,7 +7,7 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #111827; color: #f3f4f6; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         #controls { background: #1f2937; padding: 15px; border-radius: 8px; margin-bottom: 15px; display: flex; gap: 12px; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.4); flex-wrap: wrap; }
         #profiler-dash { display: flex; gap: 15px; background: #111827; border: 1px solid #374151; padding: 10px 20px; border-radius: 6px; margin-bottom: 15px; width: 984px; justify-content: space-around; font-family: monospace; }
-        canvas { background: #030712; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); border: 1px solid #374151; }
+        canvas { background: #030712; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); border: 1px solid #374151; cursor: crosshair; }
         button { background: #2563eb; color: white; border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 13px; }
         button:hover { background: #1d4ed8; }
         .metric-val { color: #10b981; font-weight: bold; }
@@ -45,7 +45,7 @@ let placementMode = 'obstacle';
 let computedPath = [];
 let wasmPlanner = null;
 
-// Ensure the grid background layout renders instantly upon browser launch
+// Ensure background drops are visible immediately
 draw();
 
 var Module = {
@@ -70,7 +70,11 @@ function setMode(mode) {
     document.getElementById('modeDisplay').innerText = `Mode: Set ${mode.toUpperCase()}`;
 }
 
-function clearObstacles() { obstacles = []; runSimulation(); }
+function clearObstacles() { 
+    obstacles = []; 
+    runSimulation(); 
+}
+
 function screenToLatLng(x, y) { return { lat: 90 - (y / canvas.height) * 180, lng: (x / canvas.width) * 360 - 180 }; }
 function latLngToScreen(lat, lng) { return { x: ((lng + 180) / 360) * canvas.width, y: ((90 - lat) / 180) * canvas.height }; }
 
@@ -88,37 +92,48 @@ canvas.addEventListener('mousedown', (e) => {
     else if (placementMode === 'goal') goalPoint = geo;
     else if (placementMode === 'obstacle') obstacles.push({ lat: geo.lat, lng: geo.lng, radius: 800 });
     
-    if (wasmPlanner) {
-        runSimulation();
-    } else {
-        draw();
-    }
+    runSimulation();
 });
 
 function runSimulation() {
-    if (!wasmPlanner) return;
-
     const directDist = getDistanceMiles(startPoint, goalPoint);
     document.getElementById('profDist').innerText = `${Math.round(directDist).toLocaleString()} Miles`;
+
+    if (!wasmPlanner) {
+        draw();
+        return;
+    }
 
     let flatObstacles = [];
     obstacles.forEach(o => { flatObstacles.push(o.lat, o.lng, o.radius); });
 
-    let typedArray = new Float64Array(flatObstacles);
-    let buffer = Module._malloc(typedArray.length * typedArray.BYTES_PER_ELEMENT);
-    Module.HEAPF64.set(typedArray, buffer / typedArray.BYTES_PER_ELEMENT);
+    // Fallback safe buffer initialization strategy supporting all variants of Emscripten
+    let buffer = 0;
+    if (flatObstacles.length > 0) {
+        let typedArray = new Float64Array(flatObstacles);
+        buffer = Module._malloc(typedArray.length * typedArray.BYTES_PER_ELEMENT);
+        
+        // SAFE WORKAROUND: Instead of reading HEAPF64 directly, use Emscripten's built-in memory writer
+        if (typeof Module.writeArrayToMemory === 'function') {
+            Module.writeArrayToMemory(typedArray, buffer);
+        } else {
+            // Modern direct allocation fallback
+            (Module.HEAPF64 || setValue).__proto__.constructor(Module.wasmMemory.buffer).set(typedArray, buffer >> 3);
+        }
+    }
 
     const t0 = window.performance.now();
     let rawResultString = wasmPlanner(startPoint.lat, startPoint.lng, goalPoint.lat, goalPoint.lng, buffer, obstacles.length);
     const t1 = window.performance.now();
 
-    Module._free(buffer);
+    if (buffer > 0) {
+        Module._free(buffer);
+    }
 
     computedPath = [];
     if (rawResultString && rawResultString !== "ERROR") {
         let sections = rawResultString.split(';');
         if (sections.length >= 3) {
-            // Using safe array methods instead of bracket tokens to prevent formatting bugs
             let cppMicroseconds = sections.shift();
             let nodesEvaluated = sections.shift();
             let pathData = sections.join(';');
@@ -160,13 +175,17 @@ function draw() {
     obstacles.forEach(obs => {
         let screenPos = latLngToScreen(obs.lat, obs.lng);
         let pixelRadius = (obs.radius / 24901) * canvas.width;
-        ctx.beginPath(); ctx.arc(screenPos.x, screenPos.y, pixelRadius, 0, 2 * Math.PI);
-        ctx.fillStyle = 'rgba(239, 68, 64, 0.2)'; ctx.fill();
-        ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 1; ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(screenPos.x, screenPos.y, pixelRadius, 0, 2 * Math.PI);
+        ctx.fillStyle = 'rgba(239, 68, 64, 0.2)'; 
+        ctx.fill();
+        ctx.strokeStyle = '#ef4444'; 
+        ctx.lineWidth = 1; 
+        ctx.stroke();
     });
 
-    // Draw C++ Calculated Path Route Trajectory
-    if (computedPath.length > 1) {
+    // Draw C++ Calculated Path Route Trajectory safely
+    if (computedPath && computedPath.length > 1) {
         ctx.beginPath();
         let startScr = latLngToScreen(computedPath[0].lat, computedPath[0].lng);
         ctx.moveTo(startScr.x, startScr.y);
@@ -174,7 +193,9 @@ function draw() {
             let scratchPos = latLngToScreen(computedPath[i].lat, computedPath[i].lng);
             ctx.lineTo(scratchPos.x, scratchPos.y);
         }
-        ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 3; ctx.stroke();
+        ctx.strokeStyle = '#38bdf8'; 
+        ctx.lineWidth = 3; 
+        ctx.stroke();
     }
 
     // Draw Start Node Terminal Point (Green)
