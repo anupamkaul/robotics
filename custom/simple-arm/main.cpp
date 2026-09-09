@@ -122,6 +122,7 @@ int main() {
             double target_joint1 = 0.8 * std::sin(d->time * 3.0);
             double target_joint2 = 0.6 * std::cos(d->time * 4.0);
 
+	    // controlling the actuator motions here: 
             d->ctrl[0] = target_joint1;
             d->ctrl[1] = target_joint2;
 
