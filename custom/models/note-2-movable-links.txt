@@ -1,0 +1,12 @@
+Since link2 is currently attached directly to the stationary base (see arm2d_controlled.xml), my XML tree structure is nested flat. 
+
+In a standard humanoid arm configuration, joints must inherit their positions down a hierarchical parent-child chain.
+
+To model a proper shoulder and elbow system, link2 (the elbow/forearm) must be declared inside the XML body block of link1 
+(the shoulder/upper arm). 
+
+That way, when the shoulder rotates, the elbow moves with it through space, while still retaining its own independent motor rotation.
+
+(see how arm2d_controlled.xml evolves to arm2d_shoulder_elbow.xml)
+
+

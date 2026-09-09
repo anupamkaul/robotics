@@ -1,0 +1,31 @@
+<mujoco model="2d_human_arm_skeleton">
+    <option timestep="0.0005" gravity="0 0 -9.81"/>
+    
+    <worldbody>
+        <light pos="0 0 3" dir="0 0 -1"/>
+        <geom type="plane" size="10 10 0.1" rgba="0.9 0.9 0.9 1"/>
+
+        <!-- Rigid Base Pillar (Anchored to the floor) -->
+        <body name="base" pos="0 0 0">
+            <geom type="cylinder" size="0.05 0.05" rgba="0.3 0.3 0.3 1"/>
+            
+            <!-- SHOULDER LINK (Rotates relative to the base pillar) -->
+            <body name="link1" pos="0 0 0">
+                <joint name="shoulder_joint" type="hinge" axis="0 1 0" pos="0 0 0"/>
+                <geom type="capsule" fromto="0 0 0 0 0 0.4" size="0.03" rgba="0 0.7 0 1"/>
+                
+                <!-- ELBOW LINK (Nested inside Link1 - moves through space with the shoulder) -->
+                <body name="link2" pos="0 0 0.4">
+                    <joint name="elbow_joint" type="hinge" axis="0 1 0" pos="0 0 0"/>
+                    <geom type="capsule" fromto="0 0 0 0 0 0.3" size="0.025" rgba="0 0 0.7 1"/>
+                </body>
+            </body>
+        </body>
+    </worldbody>
+
+    <actuator>
+        <!-- Servos controlling our human arm mockup directly via Python/C++ radians -->
+        <position name="shoulder_servo" joint="shoulder_joint" kp="300" kv="30"/>
+        <position name="elbow_servo" joint="elbow_joint" kp="200" kv="20"/>
+    </actuator>
+</mujoco>
