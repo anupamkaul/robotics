@@ -1,0 +1,18 @@
+# 1. Compile the code (Passing BOTH the MuJoCo core include directory and the hidden GLFW include directory)
+g++ -std=c++17 \
+  -I/Users/anupamkaul/other_git/deepmind/mujoco/include \
+  -I/Users/anupamkaul/other_git/deepmind/build-mujoco/_deps/glfw3-src/include \
+  -c main_free.cpp -o main_free.o
+
+# 2. Link your objects together into your final runnable application binary
+g++ main_free.o \
+  -L/Users/anupamkaul/other_git/deepmind/build-mujoco/lib \
+  -lmujoco \
+  /Users/anupamkaul/other_git/deepmind/build-mujoco/lib/libglfw3.a \
+  -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -o simulate_arm_free
+
+# 3. Secure the dynamic library pointer pathway links
+export DYLD_LIBRARY_PATH=/Users/anupamkaul/other_git/deepmind/build-mujoco/lib:$DYLD_LIBRARY_PATH
+
+# 4. Launch your custom 2-joint visualizer arm simulation program
+./simulate_arm_free
