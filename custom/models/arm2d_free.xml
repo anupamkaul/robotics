@@ -19,6 +19,13 @@
                     <joint name="joint2" type="hinge" axis="0 1 0" pos="0 0 0"/>
                     <geom type="capsule" fromto="0 0 0 0 0 0.3" size="0.025" rgba="0 0 0.7 1"/>
                 </body>
+
+                <!-- Link 3 (Rotates around Y-axis) this is a second rotating arm and completely optional -->
+                <body name="link3" pos="0 0 0.4">
+                    <joint name="joint3" type="hinge" axis="0 1 0" pos="0 0 0"/>
+                    <geom type="capsule" fromto="0 0 0 0 0 0.3" size="0.025" rgba="0.7 0 0.0 1"/>
+                </body>
+
             </body>
         </body>
     </worldbody>
