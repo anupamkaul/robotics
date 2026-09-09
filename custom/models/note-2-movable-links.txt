@@ -6,7 +6,12 @@ To model a proper shoulder and elbow system, link2 (the elbow/forearm) must be d
 (the shoulder/upper arm). 
 
 That way, when the shoulder rotates, the elbow moves with it through space, while still retaining its own independent motor rotation.
-
 (see how arm2d_controlled.xml evolves to arm2d_shoulder_elbow.xml)
+
+---
+
+If only the bottom link is moving and the shoulder stays frozen, it means my d->ctrl assignments are mapped to the wrong actuators or the upper joint cannot overcome internal forces.
+
+To fix this decisively and provide an intuitive environment to study multi-link articulation, let’s expand the system into a 3-joint robotic arm (Shoulder, Elbow, and Wrist). By explicitly defining three cascading parent-child link bodies in the XML and passing three distinct sine waves in C++, we can force the entire body to bend and ripple dynamically through space.
 
 
