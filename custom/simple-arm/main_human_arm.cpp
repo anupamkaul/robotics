@@ -54,16 +54,10 @@ int main() {
             // =================================================================
             // Angles are in Radians. 
             // Let's make the shoulder sway wide, and the elbow flex tightly.
-
-            // Values that make shoulder stationary and elbow move like a pendulum
-
-            //double target_shoulder = 0.6 * std::sin(d->time * 2.0);
-            //double target_elbow    = 0.9 * std::cos(d->time * 4.5);
-
  
             // Adding forces so it "breaks" the shoulder joint and causes it to move as well        
-            double target_shoulder =  9 * 0.6 * std::sin(d->time * 2.0);
-            double target_elbow    = 10 * 0.6 * std::sin(d->time * 2.0);
+            double target_shoulder =   0.6 * std::sin(d->time * 2.0);
+            double target_elbow    = 0.9 * std::cos(d->time * 4.5);
 
             // Direct input matrix coordinate register assignments
             d->ctrl[0] = target_shoulder;
