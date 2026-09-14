@@ -22,10 +22,10 @@
                     <!-- Link 3: Wrist (Nested inside Link 2) -->
                     <body name="link3" pos="0 0 0.3">
                         <joint name="wrist_joint" type="hinge" axis="0 1 0" pos="0 0 0"/>
-                        <geom type="capsule" fromto="0 0 0 0 0 0.2" size="0.02" rgba="0.7 0 0 1"/>
+                        <geom type="capsule" fromto="0 0 0 0 0 0.22" size="0.02" rgba="0.7 0 0 1"/>
 
                              <!-- Link 4: Thumb (Nested inside Link 3) -->
-                                 <body name="link4" pos="0 0 0.3">
+                                 <body name="link4" pos="0 0 0.26">
                                      <joint name="thumb_joint" type="hinge" axis="0 1 0" pos="0 0 0"/>
                                      <geom type="capsule" fromto="0 0 0 0 0 0.1" size="0.02" rgba="0.7 0 0 1"/>
                                  </body>

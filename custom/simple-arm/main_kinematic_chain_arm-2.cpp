@@ -26,7 +26,6 @@ void mouse_move(GLFWwindow* window, double xpos, double ypos) {
 
 int main() {
     char error[1000] = "Could not load XML model";
-    // m = mj_loadXML("../models/arm3d_kinematic_chain.xml", nullptr, error, 1000);
     m = mj_loadXML("../models/arm3d_kinematic_chain-2.xml", nullptr, error, 1000);
     if (!m) { std::cerr << error << std::endl; return 1; }
     d = mj_makeData(m);
@@ -48,6 +47,7 @@ int main() {
     int link1_id = mj_name2id(m, mjOBJ_BODY, "link1");
     int link2_id = mj_name2id(m, mjOBJ_BODY, "link2");
     int link3_id = mj_name2id(m, mjOBJ_BODY, "link3");
+    int link4_id = mj_name2id(m, mjOBJ_BODY, "link4");
 
     std::cout << "3-Joint Arm Simulation Active. Monitoring control array entries..." << std::endl;
 
