@@ -58,16 +58,20 @@ int main() {
             // PROGRAMMATIC CONTROL ZONE: THREE DISTINCT TARGET WAVES
             // =================================================================
             // Angles are in Radians. Different frequencies force them to unsync.
-            double target_shoulder = 0.5 * std::sin(d->time * 2.0); // Green Link
-            double target_elbow    = 0.7 * std::cos(d->time * 3.5); // Blue Link
-            double target_wrist    = 0.9 * std::sin(d->time * 5.0); // Red Link
+            double target_shoulder = 0.6 * std::sin(d->time * 2.0); // Green Link
+            double target_elbow    = 0.9 * std::cos(d->time * 4.5); // Blue Link
+            double target_wrist    = 0.7 * std::sin(d->time * 3.0); // Red Link
+            //double target_wrist    = 0.7 * std::cos(d->time * 3.0); // Red Link
+
+            //double target_wrist    = 0.0; // Red Link
 
             // Inject targets into the 3 compiled position actuator slots explicitly
-            if (m->nu >= 3) {
+            if (m->nu >= 2) { // just killed the 3rd servo to experiment
                 d->ctrl[0] = target_shoulder;
                 d->ctrl[1] = target_elbow;
                 d->ctrl[2] = target_wrist;
             }
+
             // =================================================================
 
             mj_step(m, d);
