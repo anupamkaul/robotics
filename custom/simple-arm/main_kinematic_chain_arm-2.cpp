@@ -48,6 +48,8 @@ int main() {
     int link2_id = mj_name2id(m, mjOBJ_BODY, "link2");
     int link3_id = mj_name2id(m, mjOBJ_BODY, "link3");
     int link4_id = mj_name2id(m, mjOBJ_BODY, "link4");
+    int link5_id = mj_name2id(m, mjOBJ_BODY, "link5");
+    int link6_id = mj_name2id(m, mjOBJ_BODY, "link6");
 
     std::cout << "3-Joint Arm Simulation Active. Monitoring control array entries..." << std::endl;
 
@@ -63,11 +65,28 @@ int main() {
             double target_elbow    = 0.7 * std::cos(d->time * 3.5); // Blue Link
             double target_wrist    = 0.9 * std::sin(d->time * 5.0); // Red Link
 
-            // Inject targets into the 3 compiled position actuator slots explicitly
+            double target_thumb    = 1.1 * std::sin(d->time * 5.0); // Red Link
+            double target_finger1  = 1.3 * std::sin(d->time * 5.0); // Red Link
+            double target_finger2  = 1.5 * std::sin(d->time * 5.0); // Red Link
+
+            // Inject targets into the compiled position actuator slots explicitly
             if (m->nu >= 3) {
                 d->ctrl[0] = target_shoulder;
                 d->ctrl[1] = target_elbow;
                 d->ctrl[2] = target_wrist;
+                d->ctrl[3] = target_thumb;
+                d->ctrl[4] = target_finger1;
+                d->ctrl[5] = target_finger2;
+                d->ctrl[6] = target_finger2; // an extra is "base" (cylinder) was ctrl[0]?
+
+                /*
+                d->ctrl[7] = target_finger2; // none of this should work, but does..
+                d->ctrl[8] = target_finger2;
+                d->ctrl[9] = target_finger2;
+                d->ctrl[10] = target_finger2;
+                d->ctrl[11] = target_finger2;
+                */
+
             }
             // =================================================================
 
@@ -77,16 +96,20 @@ int main() {
             double* R1 = &d->xmat[link1_id * 9];
             double* R2 = &d->xmat[link2_id * 9];
             double* R3 = &d->xmat[link3_id * 9];
+            double* R4 = &d->xmat[link4_id * 9];
 
             if (std::fmod(d->time, 0.5) < m->opt.timestep) {
                 std::printf("\n=== Real-Time 3-Link Telemetry (Time: %.2f) ===\n", d->time);
                 double angle1 = std::atan2(-R1[2], R1[0]);
                 double angle2 = std::atan2(-R2[2], R2[0]);
                 double angle3 = std::atan2(-R3[2], R3[0]);
+                double angle4 = std::atan2(-R4[2], R4[0]);
                 
                 std::printf("Shoulder (Green) Angle: %6.3f Rad | Target: %6.3f Rad\n", angle1, target_shoulder);
                 std::printf("Elbow    (Blue)  Angle: %6.3f Rad | Target: %6.3f Rad\n", angle2, target_elbow);
                 std::printf("Wrist    (Red)   Angle: %6.3f Rad | Target: %6.3f Rad\n", angle3, target_wrist);
+                std::printf("Thumb    (Green) Angle: %6.3f Rad | Target: %6.3f Rad\n", angle4, target_thumb);
+                std::printf("NU : %2lld\n", m->nu); // happens to be 3, why?
             }
         }
 
