@@ -109,7 +109,7 @@ int main() {
                 std::printf("Elbow    (Blue)  Angle: %6.3f Rad | Target: %6.3f Rad\n", angle2, target_elbow);
                 std::printf("Wrist    (Red)   Angle: %6.3f Rad | Target: %6.3f Rad\n", angle3, target_wrist);
                 std::printf("Thumb    (Green) Angle: %6.3f Rad | Target: %6.3f Rad\n", angle4, target_thumb);
-                std::printf("NU : %2lld\n", m->nu); // happens to be 3, why?
+                std::printf("NU : %2lld\n", m->nu); 
             }
         }
 
