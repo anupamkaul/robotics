@@ -44,12 +44,12 @@ int main() {
     cam.lookat[0] = 0.0; cam.lookat[1] = 0.0; cam.lookat[2] = 0.4;
 
     // Pull distinct internal body array IDs for matrix evaluation
-    int link1_id = mj_name2id(m, mjOBJ_BODY, "link1");
-    int link2_id = mj_name2id(m, mjOBJ_BODY, "link2");
-    int link3_id = mj_name2id(m, mjOBJ_BODY, "link3");
-    int link4_id = mj_name2id(m, mjOBJ_BODY, "link4");
-    int link5_id = mj_name2id(m, mjOBJ_BODY, "link5");
-    int link6_id = mj_name2id(m, mjOBJ_BODY, "link6");
+    int link1_id = mj_name2id(m, mjOBJ_BODY, "link1"); // shoulder 
+    int link2_id = mj_name2id(m, mjOBJ_BODY, "link2"); // elbow
+    int link3_id = mj_name2id(m, mjOBJ_BODY, "link3"); // wrist
+    int link4_id = mj_name2id(m, mjOBJ_BODY, "link4"); // thumb
+    int link5_id = mj_name2id(m, mjOBJ_BODY, "link5"); // finger 1
+    int link6_id = mj_name2id(m, mjOBJ_BODY, "link6"); // finger 2
 
     std::cout << "3-Joint Arm Simulation Active. Monitoring control array entries..." << std::endl;
 
@@ -66,7 +66,7 @@ int main() {
             double target_wrist    = 0.9 * std::sin(d->time * 5.0); // Red Link
 
             double target_thumb    = 1.1 * std::sin(d->time * 5.0); // Red Link
-            double target_finger1  = 1.3 * std::sin(d->time * 5.0); // Red Link
+            double target_finger1  = 1.3 * std::cos(d->time * 5.0); // Red Link
             double target_finger2  = 1.5 * std::sin(d->time * 5.0); // Red Link
 
             // Inject targets into the compiled position actuator slots explicitly

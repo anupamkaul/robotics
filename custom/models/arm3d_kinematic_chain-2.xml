@@ -51,7 +51,10 @@
     <actuator>
         <!-- Distinct position servos controlling each joint independently -->
         <position name="shoulder_servo" joint="shoulder_joint" kp="300" kv="30"/>
-        <position name="elbow_servo" joint="elbow_joint" kp="200" kv="20"/>
-        <position name="wrist_servo" joint="wrist_joint" kp="100" kv="10"/>
+        <position name="elbow_servo"    joint="elbow_joint" kp="200" kv="20"/>
+        <position name="wrist_servo"    joint="wrist_joint" kp="100" kv="10"/>
+        <position name="thumb_servo"    joint="thumb_joint" kp="10" kv="1"/>
+        <position name="finger1_servo"  joint="finger1_joint" kp="10" kv="1"/>
+        <position name="finger2_servo"  joint="finger2_joint" kp="10" kv="1"/>
     </actuator>
 </mujoco>
