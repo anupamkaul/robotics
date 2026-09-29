@@ -60,34 +60,30 @@ int main() {
             // =================================================================
             // PROGRAMMATIC CONTROL ZONE: THREE DISTINCT TARGET WAVES
             // =================================================================
-            // Angles are in Radians. Different frequencies force them to unsync.
+
+            // Keep your arm joints swinging smoothly to move the hand through space
             double target_shoulder = 0.5 * std::sin(d->time * 2.0); // Green Link
             double target_elbow    = 0.7 * std::cos(d->time * 3.5); // Blue Link
             double target_wrist    = 0.9 * std::sin(d->time * 5.0); // Red Link
 
-            double target_thumb    = 1.1 * std::sin(d->time * 5.0); // Red Link
-            double target_finger1  = 1.3 * std::cos(d->time * 5.0); // Red Link
-            double target_finger2  = 1.5 * std::sin(d->time * 5.0); // Red Link
+            // --- OPTION A: COORDINATED OPPOSING GRIPPER ---
+            // Create a single master driver for the hand closing rate
+            double grip_command = 0.6 * std::sin(d->time * 4.0); 
+            //double grip_command = 1.1 * std::sin(d->time * 5.0); // increase the opposing stretch
 
-            // Inject targets into the compiled position actuator slots explicitly
-            if (m->nu >= 3) {
+            double target_thumb    =  grip_command; // Positive moves thumb inward
+            double target_finger1  = -grip_command; // Negative mirrors Finger 1 inward
+            double target_finger2  = -grip_command; // Negative mirrors Finger 2 inward
+
+            if (m->nu >= 6) {
                 d->ctrl[0] = target_shoulder;
                 d->ctrl[1] = target_elbow;
                 d->ctrl[2] = target_wrist;
                 d->ctrl[3] = target_thumb;
                 d->ctrl[4] = target_finger1;
                 d->ctrl[5] = target_finger2;
-                d->ctrl[6] = target_finger2; // an extra is "base" (cylinder) was ctrl[0]?
-
-                /*
-                d->ctrl[7] = target_finger2; // none of this should work, but does..
-                d->ctrl[8] = target_finger2;
-                d->ctrl[9] = target_finger2;
-                d->ctrl[10] = target_finger2;
-                d->ctrl[11] = target_finger2;
-                */
-
             }
+ 
             // =================================================================
 
             mj_step(m, d);
