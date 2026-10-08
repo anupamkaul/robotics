@@ -172,7 +172,8 @@ int main() {
     srand(time(0)); // Seed for random number generation
 
     // Adjustable Variable for Animation Delay
-    int animationSpeedMs = 150; // Change this to alter step speed (e.g. 500 for slower, 50 for faster)
+    //int animationSpeedMs = 150; // Change this to alter step speed (e.g. 500 for slower, 50 for faster)
+    int animationSpeedMs = 1000; // Change this to alter step speed (e.g. 500 for slower, 50 for faster)
 
     // Initial joint angles set to 0.0 radians (straight arm pointing right)
     std::vector<double> jointAngles(NUM_JOINTS, 0.0);
