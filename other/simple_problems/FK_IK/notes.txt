@@ -1,0 +1,18 @@
+
+How This Works (Simplified Breakdown)
+
+1. The Setup: The robot has 4 connected segments (2.5, 2.0, 1.5, 1.0 units long). 
+The total extension capability is 7.0 units.
+
+2. Forward Kinematics (calculateFK): It uses standard trigonometry (cos and sin). 
+
+Starting from the base (0,0), it loops through each joint, adds up the angles to find the link's global orientation, 
+and calculates where the next joint sits.
+
+3. Inverse Kinematics (calculateIK): The CCD algorithm behaves exactly like a human arm trying to touch an object:
+
+	• It looks at the tip of the hand and the ball.
+	• It starts at the last joint (the wrist) and rotates it so the hand points directly at the ball.
+	• Then it moves back to the elbow, rotating it so the whole lower arm swings closer to the ball.
+	• It repeats this backward down to the shoulder until the tip matches the target location.
+
