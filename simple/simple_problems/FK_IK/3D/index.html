@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Kinematics Simulation Studio</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #121214;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    #canvas-container {
+      flex: 1;
+      width: 100%;
+      min-height: 0;
+      position: relative;
+      background-color: #0b0b0c;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .control-panel {
+      background: #1e1e24;
+      border-top: 2px solid #2d2d36;
+      padding: 16px;
+      box-sizing: border-box;
+      z-index: 10;
+    }
+    .dashboard {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    button {
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover { background-color: #2563eb; }
+    button.secondary { background-color: #4b5563; }
+    button.secondary:hover { background-color: #374151; }
+    .slider-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+    input[type="range"] { flex: 1; }
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+      font-size: 12px;
+      border-top: 1px solid #2d2d36;
+      padding-top: 12px;
+    }
+    .telemetry-card span { 
+      color: #3b82f6; 
+      font-weight: bold; 
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <div id="canvas-container"></div>
+
+  <div class="control-panel">
+    <div class="dashboard">
+      <div class="btn-row">
+        <button id="btn-play">Pause Simulation</button>
+        <button id="btn-step" class="secondary">Single Step Iteration</button>
+        <button id="btn-reset" class="secondary">Randomize Red Ball</button>
+      </div>
+      <div class="slider-group">
+        <label>Animation Loop Delay:</label>
+        <input type="range" id="slider-speed" min="20" max="600" value="150">
+        <span id="speed-label">150ms</span>
+      </div>
+      <div class="telemetry-grid">
+        <div class="telemetry-card">Ball Position: <span id="tel-ball">X:0 Y:0 Z:0</span></div>
+        <div class="telemetry-card">End Effector: <span id="tel-ee">X:0 Y:0 Z:0</span></div>
+        <div class="telemetry-card">Loop Iteration: <span id="tel-iter">0</span></div>
+        <div class="telemetry-card">Target Gap Status: <span id="tel-error">0.00 units</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let scene, camera, renderer;
+    let armLinks = [], jointMeshes = [], ballMesh;
+    let gridHelper;
+
+    const NUM_JOINTS = 4;
+    const LINK_LENGTHS = [2.5, 2.0, 1.5, 1.0];
+    let jointAngles = Array.from({length: NUM_JOINTS}, () => ({ yaw: 0.1, pitch: 0.1 }));
+    let ballPosition = { x: 3.0, y: 2.0, z: 2.5 };
+
+    let isRunning = true;
+    let currentIteration = 0;
+    let animationDelay = 150;
+    let lastStepTime = 0;
+
+    function init3DStudio() {
+      const container = document.getElementById('canvas-container');
+      
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x121214);
+      
+      camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+      camera.position.set(10, 10, 12);
+      camera.lookAt(0, 1.5, 0);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.shadowMap.enabled = true;
+      container.appendChild(renderer.domElement);
+
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+      scene.add(ambientLight);
+      
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      directionalLight.position.set(10, 15, 10);
+      scene.add(directionalLight);
+
+      gridHelper = new THREE.GridHelper(16, 16, 0x3b82f6, 0x2d2d36);
+      gridHelper.position.y = 0;
+      scene.add(gridHelper);
+
+      const baseGeo = new THREE.CylinderGeometry(0.6, 0.8, 0.4, 16);
+      const baseMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.4 });
+      const baseMesh = new THREE.Mesh(baseGeo, baseMat);
+      scene.add(baseMesh);
+
+      const jointGeo = new THREE.SphereGeometry(0.25, 16, 16);
+      const jointMat = new THREE.MeshStandardMaterial({ color: 0x64748b, metalness: 0.3 });
+      
+      for(let i = 0; i <= NUM_JOINTS; i++) {
+        let m = new THREE.Mesh(jointGeo, jointMat);
+        jointMeshes.push(m);
+        scene.add(m);
+      }
+
+      for(let i = 0; i < NUM_JOINTS; i++) {
+        let linkGeo = new THREE.CylinderGeometry(0.12, 0.15, LINK_LENGTHS[i], 12);
+        linkGeo.translate(0, LINK_LENGTHS[i] / 2, 0);
+        linkGeo.rotateX(Math.PI / 2); 
+        
+        let linkMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6, metalness: 0.5, roughness: 0.2 });
+        let linkMesh = new THREE.Mesh(linkGeo, linkMat);
+        armLinks.push(linkMesh);
+        scene.add(linkMesh);
+      }
+
+      const ballGeo = new THREE.SphereGeometry(0.3, 24, 24);
+      const ballMat = new THREE.MeshStandardMaterial({ 
+        color: 0xef4444, 
+        emissive: 0x550000, 
+        roughness: 0.1 
+      });
+      ballMesh = new THREE.Mesh(ballGeo, ballMat);
+      scene.add(ballMesh);
+
+      randomizeBallTarget();
+      registerUserControls();
+      window.addEventListener('resize', handleWindowResize);
+      
+      setTimeout(handleWindowResize, 50);
+    }
+
+    function compute3DFK() {
+      let positions = [{ x: 0, y: 0, z: 0 }];
+      let accumYaw = 0;
+      let accumPitch = 0;
+
+      for (let i = 0; i < NUM_JOINTS; i++) {
+        accumYaw += jointAngles[i].yaw;
+        accumPitch += jointAngles[i].pitch;
+
+        let nextX = positions[i].x + LINK_LENGTHS[i] * Math.cos(accumPitch) * Math.cos(accumYaw);
+        let nextY = positions[i].y + LINK_LENGTHS[i] * Math.cos(accumPitch) * Math.sin(accumYaw);
+        let nextZ = positions[i].z + Math.sin(accumPitch) * LINK_LENGTHS[i];
+        
+        positions.push({ x: nextX, y: nextY, z: nextZ });
+      }
+      return positions;
+    }
+
+    function execute3DCCDStep() {
+      let joints = compute3DFK();
+      let endEffector = joints[NUM_JOINTS];
+
+      let error = Math.sqrt(
+        Math.pow(ballPosition.x - endEffector.x, 2) +
+        Math.pow(ballPosition.y - endEffector.y, 2) +
+        Math.pow(ballPosition.z - endEffector.z, 2)
+      );
+
+      if (error < 0.02) return true;
+
+      for (let i = NUM_JOINTS - 1; i >= 0; i--) {
+        joints = compute3DFK();
+        endEffector = joints[NUM_JOINTS];
+
+        let vEE = { x: endEffector.x - joints[i].x, y: endEffector.y - joints[i].y, z: endEffector.z - joints[i].z };
+        let vBall = { x: ballPosition.x - joints[i].x, y: ballPosition.y - joints[i].y, z: ballPosition.z - joints[i].z };
+
+        let magEE = Math.sqrt(vEE.x*vEE.x + vEE.y*vEE.y + vEE.z*vEE.z);
+        let magBall = Math.sqrt(vBall.x*vBall.x + vBall.y*vBall.y + vBall.z*vBall.z);
+
+        if (magEE < 0.01 || magBall < 0.01) continue;
+
+        let dot = vEE.x*vBall.x + vEE.y*vBall.y + vEE.z*vBall.z;
+        let cosTheta = dot / (magEE * magBall);
+        cosTheta = Math.max(-1, Math.min(1, cosTheta));
+        let deltaAngle = Math.acos(cosTheta);
+
+        if (deltaAngle < 0.002) continue;
+
+        let axis = {
+          x: vEE.y * vBall.z - vEE.z * vBall.y,
+          y: vEE.z * vBall.x - vEE.x * vBall.z,
+          z: vEE.x * vBall.y - vEE.y * vBall.x
+        };
+        let magAxis = Math.sqrt(axis.x*axis.x + axis.y*axis.y + axis.z*axis.z);
+        if(magAxis > 0) {
+          axis.x /= magAxis; axis.y /= magAxis; axis.z /= magAxis;
+        }
+
+        jointAngles[i].yaw += axis.z * deltaAngle * 0.4;
+        jointAngles[i].pitch += (axis.x + axis.y) * deltaAngle * 0.4;
+      }
+      return false;
+    }
+
+    function syncGraphicTransforms() {
+      const points = compute3DFK();
+      
+      for(let i = 0; i <= NUM_JOINTS; i++) {
+        jointMeshes[i].position.set(points[i].x, points[i].z, -points[i].y); 
+      }
+
+      for(let i = 0; i < NUM_JOINTS; i++) {
+        let pStart = points[i];
+        let pEnd = points[i+1];
+        
+        armLinks[i].position.set(pStart.x, pStart.z, -pStart.y);
+        armLinks[i].lookAt(new THREE.Vector3(pEnd.x, pEnd.z, -pEnd.y));
+      }
+
+      ballMesh.position.set(ballPosition.x, ballPosition.z, -ballPosition.y);
+
+      let ee = points[NUM_JOINTS];
+      let err = Math.sqrt(Math.pow(ballPosition.x-ee.x,2)+Math.pow(ballPosition.y-ee.y,2)+Math.pow(ballPosition.z-ee.z,2));
+      
+      document.getElementById('tel-ball').innerText = `X:${ballPosition.x.toFixed(2)} Y:${ballPosition.y.toFixed(2)} Z:${ballPosition.z.toFixed(2)}`;
+      document.getElementById('tel-ee').innerText = `X:${ee.x.toFixed(2)} Y:${ee.y.toFixed(2)} Z:${ee.z.toFixed(2)}`;
+      document.getElementById('tel-iter').innerText = currentIteration;
+      document.getElementById('tel-error').innerText = `${err.toFixed(3)} units`;
+    }
+
+    function randomizeBallTarget() {
+      let u = Math.random();
+      let v = Math.random();
+      let theta = u * 2.0 * Math.PI;
+      let phi = Math.acos(2.0 * v - 1.0);
+      let r = 2.0 + Math.random() * 4.0; 
+
+      ballPosition.x = r * Math.sin(phi) * Math.cos(theta);
+      ballPosition.y = r * Math.sin(phi) * Math.sin(theta);
+      ballPosition.z = Math.abs(r * Math.cos(phi)) + 0.5;
+
+      currentIteration = 0;
+      syncGraphicTransforms();
+    }
+
+    function mainGraphicRenderLoop(timestamp) {
+      requestAnimationFrame(mainGraphicRenderLoop);
+      
+      let camTime = timestamp * 0.0002;
+      camera.position.x = Math.cos(camTime) * 12;
+      camera.position.z = Math.sin(camTime) * 12;
+      camera.lookAt(0, 1.5, 0);
+
+      if (isRunning) {
+        if (timestamp - lastStepTime > animationDelay) {
+          let reached = execute3DCCDStep();
+          if (!reached && currentIteration < 150) {
+            currentIteration++;
+          }
+          lastStepTime = timestamp;
+        }
+      }
+      
+      syncGraphicTransforms();
+      renderer.render(scene, camera);
+    }
+
+    function registerUserControls() {
+      const btnPlay = document.getElementById('btn-play');
+      const btnStep = document.getElementById('btn-step');
+      const btnReset = document.getElementById('btn-reset');
+      const sliderSpeed = document.getElementById('slider-speed');
+      const labelSpeed = document.getElementById('speed-label');
+
+      btnPlay.addEventListener('click', () => {
+        isRunning = !isRunning;
+        btnPlay.innerText = isRunning ? "Pause Simulation" : "Resume Simulation";
+      });
+
+      btnStep.addEventListener('click', () => {
+        isRunning = false;
+        btnPlay.innerText = "Resume Simulation";
+        execute3DCCDStep();
+        currentIteration++;
+        syncGraphicTransforms();
+      });
+
+      btnReset.addEventListener('click', randomizeBallTarget);
+
+      sliderSpeed.addEventListener('input', (e) => {
+        animationDelay = parseInt(e.target.value);
+        labelSpeed.innerText = `${animationDelay}ms`;
+      });
+    }
+
+    function handleWindowResize() {
+      const container = document.getElementById('canvas-container');
+      if (!container || container.clientWidth === 0 || container.clientHeight === 0) return;
+      
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+
+    window.onload = () => {
+      init3DStudio();
+      requestAnimationFrame(mainGraphicRenderLoop);
+    };
+  </script>
+</body>
+</html>

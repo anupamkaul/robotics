@@ -1,0 +1,11 @@
+this is a beautiful viewing of essentially the same code for FK and IK
+but written completely in HTML. Just open chrome (Ctrl 0) and open this index.html
+
+set the animation timing using the slider at the bottom. Can watch the entire simulation
+or can do a step by step simulation.
+
+This is a 3D grid view, with an actual red ball and the 4 link robot arm fully working
+with FK and IK ! 
+
+(invokes https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js for rendering etc)
+
